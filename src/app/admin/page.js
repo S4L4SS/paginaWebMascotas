@@ -149,7 +149,7 @@ export default function AdminPage() {
                   }}
                 />
                 <div className="hidden items-center">
-                  <span className="ml-3 text-xl font-bold text-orange-500">Mundo Mascotas</span>
+                  <span className="ml-3 text-xl font-bold text-blue-500">Mundo Mascotas</span>
                 </div>
               </Link>
             </div>
@@ -157,7 +157,7 @@ export default function AdminPage() {
             {/* Admin Profile Section */}
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                   <span className="material-symbols-outlined text-white text-sm">
                     admin_panel_settings
                   </span>
@@ -191,7 +191,7 @@ export default function AdminPage() {
               onClick={() => setTab('productos')}
               className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                 tab === 'productos'
-                  ? 'border-orange-500 text-orange-600 dark:text-orange-400'
+                  ? 'border-blue-500 text-blue-600 dark:text-blue-400'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
               }`}
             >
@@ -204,7 +204,7 @@ export default function AdminPage() {
               onClick={() => setTab('usuarios')}
               className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                 tab === 'usuarios'
-                  ? 'border-orange-500 text-orange-600 dark:text-orange-400'
+                  ? 'border-blue-500 text-blue-600 dark:text-blue-400'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
               }`}
             >
@@ -234,7 +234,7 @@ export default function AdminPage() {
               <div className="mt-4 sm:mt-0">
                 <button
                   onClick={() => setMostrarForm(!mostrarForm)}
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   <span className="material-symbols-outlined mr-2">add</span>
                   {mostrarForm ? 'Cancelar' : 'Agregar Producto'}
@@ -314,7 +314,7 @@ export default function AdminPage() {
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                      className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                       Guardar Producto
                     </button>
@@ -384,7 +384,7 @@ export default function AdminPage() {
                           <div className="flex justify-center space-x-2">
                             <button
                               onClick={() => handleEdit(producto)}
-                              className="text-orange-600 hover:text-orange-900 dark:text-orange-400 dark:hover:text-orange-300"
+                              className="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300"
                               title="Editar producto"
                             >
                               <span className="material-symbols-outlined">edit</span>
@@ -477,7 +477,7 @@ export default function AdminPage() {
                         </button>
                         <button
                           type="submit"
-                          className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                          className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
                           Actualizar
                         </button>
@@ -561,7 +561,7 @@ export default function AdminPage() {
                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                           <button
                             onClick={() => cambiarRol(usuario.idUsuario, usuario.rol)}
-                            className="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-orange-700 bg-orange-100 hover:bg-orange-200 dark:bg-orange-900 dark:text-orange-200 dark:hover:bg-orange-800"
+                            className="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-200 dark:hover:bg-blue-800"
                             title={`Cambiar a ${usuario.rol === 'admin' ? 'Cliente' : 'Administrador'}`}
                           >
                             <span className="material-symbols-outlined mr-1 text-sm">

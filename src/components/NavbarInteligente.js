@@ -50,13 +50,13 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="relative navbar-container">
-      <header className="flex items-center justify-between whitespace-nowrap border-b border-gray-200 dark:border-gray-700 px-4 sm:px-10 py-4 shadow-sm bg-white dark:bg-gray-900">
+    <div className="relative navbar-container z-50">
+      <header className="flex items-center justify-between whitespace-nowrap border-b border-gray-200 dark:border-gray-700 px-4 sm:px-10 py-4 shadow-sm bg-white dark:bg-gray-900 relative z-50">
         {/* Logo */}
         <div className="flex items-center gap-3 text-gray-900 dark:text-gray-100">
-          <span className="material-symbols-outlined text-orange-500 text-3xl">pets</span>
+          <span className="material-symbols-outlined text-blue-500 text-3xl">pets</span>
           <Link href="/">
-            <h1 className="text-xl font-bold cursor-pointer hover:text-orange-500 transition-colors">
+            <h1 className="text-xl font-bold cursor-pointer hover:text-blue-500 transition-colors">
               Mundo Mascotas🐶
             </h1>
           </Link>
@@ -75,10 +75,10 @@ const Navbar = () => {
 
         {/* Navigation (Desktop) */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <Link href="/" className="text-gray-700 dark:text-gray-300 hover:text-orange-500 transition-colors enlace-menu">
+          <Link href="/" className="text-gray-700 dark:text-gray-300 hover:text-blue-500 transition-colors enlace-menu">
             Inicio
           </Link>
-          <Link href="/productos" className="text-gray-700 dark:text-gray-300 hover:text-orange-500 transition-colors enlace-menu">
+          <Link href="/productos" className="text-gray-700 dark:text-gray-300 hover:text-blue-500 transition-colors enlace-menu">
             Productos
           </Link>
         </nav>
@@ -98,7 +98,7 @@ const Navbar = () => {
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
                 className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
-                <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
                   <span className="material-symbols-outlined text-white text-sm">person</span>
                 </div>
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{usuario.nombre}</span>
@@ -107,7 +107,7 @@ const Navbar = () => {
 
               {/* Dropdown del perfil */}
               {showProfileMenu && (
-                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-60">
                   <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
                     <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{usuario.nombre}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">Rol: {usuario.rol}</p>
@@ -133,7 +133,7 @@ const Navbar = () => {
             </div>
           ) : (
             <Link href="/login">
-              <button className="flex items-center justify-center gap-2 rounded-lg h-10 px-4 text-sm font-bold bg-orange-500 text-white hover:bg-orange-600 transition-colors boton-sesion">
+              <button className="flex items-center justify-center gap-2 rounded-lg h-10 px-4 text-sm font-bold bg-blue-500 text-white hover:bg-blue-600 transition-colors boton-sesion">
                 <span className="iniciar-sesion">Iniciar Sesión</span>
               </button>
             </Link>
@@ -143,15 +143,15 @@ const Navbar = () => {
 
       {/* Menú móvil (se despliega hacia abajo como el index.html original) */}
       <div 
-        className={`menu-movil md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-lg z-40 transition-all duration-300 ease-in-out ${
-          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+        className={`menu-movil md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-lg z-60 transition-all duration-300 ease-in-out ${
+          isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
         }`}
         id="mobile-menu"
       >
-        <nav className="flex flex-col p-4 space-y-1">
+        <nav className="flex flex-col p-6 space-y-1 min-w-0 w-full">
           <Link 
             href="/" 
-            className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors enlace-menu"
+            className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors enlace-menu"
             onClick={() => setIsMenuOpen(false)}
           >
             <span className="material-symbols-outlined mr-3">home</span>
@@ -159,7 +159,7 @@ const Navbar = () => {
           </Link>
           <Link 
             href="/productos" 
-            className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors enlace-menu"
+            className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors enlace-menu"
             onClick={() => setIsMenuOpen(false)}
           >
             <span className="material-symbols-outlined mr-3">inventory_2</span>
@@ -167,7 +167,7 @@ const Navbar = () => {
           </Link>
           <Link 
             href="/carrito" 
-            className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+            className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
             <button className="flex items-center w-full boton-carrito-movil">
@@ -176,21 +176,21 @@ const Navbar = () => {
             </button>
           </Link>
           
-          <div className="border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
+          <div className="border-t border-gray-200 dark:border-gray-700 mt-4 pt-4">
             {usuario ? (
               <>
-                <div className="flex items-center py-3 px-2 bg-orange-50 dark:bg-orange-900/20 rounded-md mb-2">
-                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center mr-3">
+                <div className="flex items-center py-3 px-3 bg-blue-50 dark:bg-blue-900/20 rounded-md mb-3">
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
                     <span className="material-symbols-outlined text-white text-sm">person</span>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{usuario.nombre}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{usuario.nombre}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">Rol: {usuario.rol}</p>
                   </div>
                 </div>
                 <Link 
                   href="/perfil" 
-                  className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+                  className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <span className="material-symbols-outlined mr-3">account_circle</span>
@@ -199,7 +199,7 @@ const Navbar = () => {
                 {usuario.rol === 'admin' && (
                   <Link 
                     href="/admin" 
-                    className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+                    className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <span className="material-symbols-outlined mr-3">admin_panel_settings</span>
@@ -211,13 +211,13 @@ const Navbar = () => {
                   className="flex items-center w-full py-3 px-2 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors"
                 >
                   <span className="material-symbols-outlined mr-3">logout</span>
-                  Cerrar Sesión
+                  <span className="whitespace-nowrap">Cerrar Sesión</span>
                 </button>
               </>
             ) : (
               <Link 
                 href="/login" 
-                className="flex items-center py-3 px-2 text-orange-600 dark:text-orange-400 font-medium hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-md transition-colors boton-sesion-movil"
+                className="flex items-center py-3 px-2 text-blue-600 dark:text-blue-400 font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md transition-colors boton-sesion-movil"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <span className="material-symbols-outlined mr-3">login</span>

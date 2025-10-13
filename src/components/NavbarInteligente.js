@@ -32,137 +32,202 @@ const Navbar = () => {
     localStorage.removeItem('usuario');
     setUsuario(null);
     setShowProfileMenu(false);
+    setIsMenuOpen(false);
     router.push('/');
   };
 
+  // Cerrar menús cuando se hace clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.navbar-container')) {
+        setShowProfileMenu(false);
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
+
   return (
-    <header className="flex items-center justify-between whitespace-nowrap border-b border-gray-200 dark:border-gray-700 px-4 sm:px-10 py-4 shadow-sm bg-white dark:bg-gray-900">
-      {/* Logo */}
-      <div className="flex items-center gap-3 text-gray-900 dark:text-gray-100">
-        <span className="material-symbols-outlined text-blue-500 text-3xl">pets</span>
-        <Link href="/">
-          <h1 className="text-xl font-bold cursor-pointer hover:text-blue-500 transition-colors">
-            Mundo Mascotas🐶
-          </h1>
-        </Link>
-      </div>
+    <div className="relative navbar-container">
+      <header className="flex items-center justify-between whitespace-nowrap border-b border-gray-200 dark:border-gray-700 px-4 sm:px-10 py-4 shadow-sm bg-white dark:bg-gray-900">
+        {/* Logo */}
+        <div className="flex items-center gap-3 text-gray-900 dark:text-gray-100">
+          <span className="material-symbols-outlined text-orange-500 text-3xl">pets</span>
+          <Link href="/">
+            <h1 className="text-xl font-bold cursor-pointer hover:text-orange-500 transition-colors">
+              Mundo Mascotas🐶
+            </h1>
+          </Link>
+        </div>
 
-      {/* Botón hamburguesa (móvil) */}
-      <button 
-        className="md:hidden flex items-center justify-center p-2"
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-      >
-        <span className="material-symbols-outlined text-3xl">menu</span>
-      </button>
+        {/* Botón hamburguesa (solo en pantallas pequeñas) */}
+        <button 
+          className="md:hidden flex items-center justify-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors boton-hamburguesa"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          id="boton-menu-movil"
+        >
+          <span className="material-symbols-outlined text-3xl text-gray-700 dark:text-gray-300">
+            {isMenuOpen ? 'close' : 'menu'}
+          </span>
+        </button>
 
-      {/* Navigation (Desktop) */}
-      <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-        <Link href="/" className="text-gray-700 dark:text-gray-300 hover:text-blue-500 transition-colors">
-          Inicio
-        </Link>
-        <Link href="/productos" className="text-gray-700 dark:text-gray-300 hover:text-blue-500 transition-colors">
-          Productos
-        </Link>
-      </nav>
+        {/* Navigation (Desktop) */}
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+          <Link href="/" className="text-gray-700 dark:text-gray-300 hover:text-orange-500 transition-colors enlace-menu">
+            Inicio
+          </Link>
+          <Link href="/productos" className="text-gray-700 dark:text-gray-300 hover:text-orange-500 transition-colors enlace-menu">
+            Productos
+          </Link>
+        </nav>
 
-      {/* Botones del lado derecho */}
-      <div className="hidden md:flex items-center gap-3">
-        {/* Carrito */}
-        <Link href="/carrito">
-          <button className="flex items-center justify-center gap-2 rounded-lg h-10 px-4 text-sm font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors">
-            <span className="material-symbols-outlined">shopping_cart</span>
-            <span className="hidden sm:inline">Carrito</span>
-          </button>
-        </Link>
-
-        {/* Usuario loggeado o botón de login */}
-        {usuario ? (
-          <div className="relative">
-            <button 
-              onClick={() => setShowProfileMenu(!showProfileMenu)}
-              className="flex items-center justify-center rounded-full h-10 w-10 overflow-hidden cursor-pointer transition-transform hover:scale-105 border-2 border-blue-500"
-            >
-              <img 
-                alt="Foto de perfil del usuario" 
-                className="h-full w-full object-cover" 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBii6We0KcWHNnBF_tMbqcFiUKAEv7HF5n4eiUdzcVp3F7CQ9O7fH4aP7MGRfjAx5cQFtrsGg6lrTpRvFZFWUqMyH7VVd5GGoDefDfmvUv_kTV8vVduPi06DW8hQPrUgYoe1sJDiYm66l_QORH_4BZuG223QMvo9sa-YTOR_R0sy8kvI1ps1JH4EObTOw6fhy-j_S5rLNEhx5T9DYJU6Bx2yjxy1j93i-LxyPOtCodcciMTGracDj-9SghwnTiHA8QXZsfjtBLqLU"
-              />
-            </button>
-            
-            {/* Menú del perfil */}
-            {showProfileMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
-                <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                  <p className="font-medium text-gray-900 dark:text-gray-100">{usuario.nombre}</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">{usuario.rol}</p>
-                </div>
-                <div className="py-2">
-                  <Link href="/perfil" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                    Editar Perfil
-                  </Link>
-                  {usuario.rol === 'admin' && (
-                    <Link href="/admin" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-                      Panel Admin
-                    </Link>
-                  )}
-                  <button 
-                    onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    Cerrar Sesión
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          <Link href="/login">
-            <button className="flex items-center justify-center gap-2 rounded-lg h-10 px-4 text-sm font-bold bg-blue-500 text-white hover:bg-blue-600 transition-colors">
-              Iniciar Sesión
+        {/* Botones Desktop */}
+        <div className="hidden md:flex items-center gap-4 botones-escritorio">
+          <Link href="/carrito">
+            <button className="flex items-center justify-center gap-2 rounded-lg h-10 px-4 text-sm font-bold border border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800 transition-colors boton-carrito">
+              <span className="material-symbols-outlined">shopping_cart</span>
+              <span className="texto-carrito">Carrito</span>
             </button>
           </Link>
-        )}
-      </div>
 
-      {/* Menú móvil */}
-      {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 md:hidden z-40">
-          <nav className="flex flex-col p-4 space-y-2">
-            <Link href="/" className="py-2 text-gray-700 dark:text-gray-300 hover:text-blue-500">
-              Inicio
+          {usuario ? (
+            <div className="relative">
+              <button 
+                onClick={() => setShowProfileMenu(!showProfileMenu)}
+                className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              >
+                <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                  <span className="material-symbols-outlined text-white text-sm">person</span>
+                </div>
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{usuario.nombre}</span>
+                <span className="material-symbols-outlined text-gray-500">expand_more</span>
+              </button>
+
+              {/* Dropdown del perfil */}
+              {showProfileMenu && (
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+                  <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{usuario.nombre}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">Rol: {usuario.rol}</p>
+                  </div>
+                  <div className="py-1">
+                    <Link href="/perfil" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                      Editar Perfil
+                    </Link>
+                    {usuario.rol === 'admin' && (
+                      <Link href="/admin" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                        Panel Admin
+                      </Link>
+                    )}
+                    <button 
+                      onClick={handleLogout}
+                      className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      Cerrar Sesión
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link href="/login">
+              <button className="flex items-center justify-center gap-2 rounded-lg h-10 px-4 text-sm font-bold bg-orange-500 text-white hover:bg-orange-600 transition-colors boton-sesion">
+                <span className="iniciar-sesion">Iniciar Sesión</span>
+              </button>
             </Link>
-            <Link href="/productos" className="py-2 text-gray-700 dark:text-gray-300 hover:text-blue-500">
-              Productos
-            </Link>
-            <Link href="/carrito" className="py-2 text-gray-700 dark:text-gray-300 hover:text-blue-500">
+          )}
+        </div>
+      </header>
+
+      {/* Menú móvil (se despliega hacia abajo como el index.html original) */}
+      <div 
+        className={`menu-movil md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-lg z-40 transition-all duration-300 ease-in-out ${
+          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+        }`}
+        id="mobile-menu"
+      >
+        <nav className="flex flex-col p-4 space-y-1">
+          <Link 
+            href="/" 
+            className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors enlace-menu"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <span className="material-symbols-outlined mr-3">home</span>
+            Inicio
+          </Link>
+          <Link 
+            href="/productos" 
+            className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors enlace-menu"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <span className="material-symbols-outlined mr-3">inventory_2</span>
+            Productos
+          </Link>
+          <Link 
+            href="/carrito" 
+            className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <button className="flex items-center w-full boton-carrito-movil">
+              <span className="material-symbols-outlined mr-3">shopping_cart</span>
               Carrito
-            </Link>
+            </button>
+          </Link>
+          
+          <div className="border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
             {usuario ? (
               <>
-                <Link href="/perfil" className="py-2 text-gray-700 dark:text-gray-300 hover:text-blue-500">
-                  Perfil ({usuario.nombre})
+                <div className="flex items-center py-3 px-2 bg-orange-50 dark:bg-orange-900/20 rounded-md mb-2">
+                  <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center mr-3">
+                    <span className="material-symbols-outlined text-white text-sm">person</span>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{usuario.nombre}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">Rol: {usuario.rol}</p>
+                  </div>
+                </div>
+                <Link 
+                  href="/perfil" 
+                  className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <span className="material-symbols-outlined mr-3">account_circle</span>
+                  Editar Perfil
                 </Link>
                 {usuario.rol === 'admin' && (
-                  <Link href="/admin" className="py-2 text-gray-700 dark:text-gray-300 hover:text-blue-500">
+                  <Link 
+                    href="/admin" 
+                    className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-orange-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <span className="material-symbols-outlined mr-3">admin_panel_settings</span>
                     Panel Admin
                   </Link>
                 )}
                 <button 
                   onClick={handleLogout}
-                  className="py-2 text-left text-red-600 dark:text-red-400"
+                  className="flex items-center w-full py-3 px-2 text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors"
                 >
+                  <span className="material-symbols-outlined mr-3">logout</span>
                   Cerrar Sesión
                 </button>
               </>
             ) : (
-              <Link href="/login" className="py-2 text-blue-500 font-medium">
-                Iniciar Sesión
+              <Link 
+                href="/login" 
+                className="flex items-center py-3 px-2 text-orange-600 dark:text-orange-400 font-medium hover:bg-orange-50 dark:hover:bg-orange-900/20 rounded-md transition-colors boton-sesion-movil"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <span className="material-symbols-outlined mr-3">login</span>
+                <span className="iniciar-sesion">Iniciar Sesión</span>
               </Link>
             )}
-          </nav>
-        </div>
-      )}
-    </header>
+          </div>
+        </nav>
+      </div>
+    </div>
   );
 };
 

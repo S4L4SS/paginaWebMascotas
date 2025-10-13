@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mundo Mascotas🐶 - Carrito de Compras</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13a4ec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                        "foreground-light": "#111618",
+                        "foreground-dark": "#f6f7f8",
+                        "subtle-light": "#617c89",
+                        "subtle-dark": "#a0b0b8",
+                        "border-light": "#dbe2e6",
+                        "border-dark": "#3a4a53"
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .radio-custom:checked {
+            background-image: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27%2313a4ec%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%274%27/%3e%3c/svg%3e');
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark">
+<div class="flex flex-col min-h-screen">
+<header class="bg-background-light dark:bg-background-dark/80 backdrop-blur-sm sticky top-0 z-10 border-b border-border-light dark:border-border-dark">
+<nav class="container mx-auto px-6 lg:px-10 py-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<h1 class="text-xl font-bold">Mundo Mascotas🐶</h1>
+</div>
+<div class="hidden md:flex items-center gap-8">
+
+</div>
+<div class="flex items-center gap-4">
+    <a href="modalPerfil.html">
+    <button>
+<div class="size-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBii6We0KcWHNnBF_tMbqcFiUKAEv7HF5n4eiUdzcVp3F7CQ9O7fH4aP7MGRfjAx5cQFtrsGg6lrTpRvFZFWUqMyH7VVJd5GGoDefDfmvUv_kTV8vVduPi06DW8hQPrUgYoe1sJDiYm66l_QORH_4BZuG223QMvo9sa-YTOR_R0sy8kvI1ps1JH4EObTOw6fhy-j_S5rLNEhx5T9DYJU6Bx2yjxy1j93i-LxyPOtCodcciMTGracDj-9SghwnTiHA8QXZsfjtBLqLU");'></div>
+    </button>
+    </a>
+</div>
+</div>
+</nav>
+</header>
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+<div class="max-w-4xl mx-auto">
+<h2 class="text-3xl lg:text-4xl font-bold mb-8">Carrito de Compras</h2>
+<div class="bg-background-light dark:bg-background-dark/50 rounded-lg shadow-md">
+<div class="p-4 sm:p-6 space-y-4">
+<div class="flex items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC34dWwunfDBDZYKCerZjCQqxFE1I92brTYhS5vTeKYzreXGG1EdMiZ7itL5KMLajkZDKBg8XO3cydMgDbUkLdfGEEDR14Uvb924MbOycFJvhbKbik-vYWxj60ySHsue9L4-5d9QOCsrHjZQtheeqyAbFpegJwE-9aUQ_Vo6YqpA4CTrVZhdw1B1eO0H5bAojYD4Ys9twQjQg7RIacIkxGBiL4zf9L301WouVEj_10bAYIimB0HlrXkyUJAsMUuD7di2gnmvoY6CAY");'></div>
+<div>
+<h3 class="font-bold text-base">NutriCan</h3>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">Alimento Premium para Perros Adultos</p>
+</div>
+</div>
+<p class="font-medium text-lg">$25.99</p>
+</div>
+<hr class="border-border-light dark:border-border-dark"/>
+<div class="flex items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC3TliOH_a6KP5BRanbTxEGXKz3zQnxu5Ijyg-zMxMDfDn_-0ZJAZ0sOyP5N2OXc6Oo7E1QfLOm6RGwhadmEIfx4KnXnqT3B0Ua2zWQ0alOpAri43JEyh5O8ooBU05hLeSz7CZRAW7ObQ1371pLGtmoiBxs4AAY8VewKDs-Em8psDyissqHYzqKDC1bBN-sAVFYCxqfB-cW6iQsN7qe6LjO7dylb0idxoPT1_1WrdEqFMwpGxHfNJVN7iYi4d4Hp3w4wKVywaKgAOE");'></div>
+<div>
+<h3 class="font-bold text-base">CatFun</h3>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">Juguete Interactivo para Gatos</p>
+</div>
+</div>
+<p class="font-medium text-lg">$12.50</p>
+</div>
+<hr class="border-border-light dark:border-border-dark"/>
+<div class="flex items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBns-Qv3DJhXGcDlYVgaxm79noe7q0r1MAmvByIloFcBZRuiBPVmd6n-l611_0_8vE6AVSFnSLwuGRfrdQwz3U30FWcu6BvsHDIEuFJXwN38HdpkmsBk2ocF8L9osz3Xjd_1zQUuHrAlTND_sz4mcvn0TBYn-lJ-MipajXFuBQ4jdjynoFFB_IXwV7ocy8dLrYNYtxlDHBUGO6RhLoGtPbhFgnJgWQXkkWz191IlD3vHl3c9h6vWM5WoSJuXd5kJGbGV-o1WYTgZ90");'></div>
+<div>
+<h3 class="font-bold text-base">DogLeash</h3>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">Correa Ajustable para Perros</p>
+</div>
+</div>
+<p class="font-medium text-lg">$15.75</p>
+</div>
+</div>
+<div class="border-t border-border-light dark:border-border-dark p-4 sm:p-6 space-y-3">
+<h3 class="text-xl font-bold mb-4">Resumen del Pedido</h3>
+<div class="flex justify-between text-sm">
+<span class="text-subtle-light dark:text-subtle-dark">Subtotal</span>
+<span>$54.24</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-subtle-light dark:text-subtle-dark">Envío</span>
+<span>$5.00</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-subtle-light dark:text-subtle-dark">Impuestos</span>
+<span>$2.50</span>
+</div>
+<hr class="border-border-light dark:border-border-dark !my-4"/>
+<div class="flex justify-between font-bold text-lg">
+<span>Total</span>
+<span>$61.74</span>
+</div>
+</div>
+<div class="border-t border-border-light dark:border-border-dark p-4 sm:p-6">
+<h3 class="text-xl font-bold mb-4">Método de Pago</h3>
+<div class="space-y-3">
+<label class="flex items-center gap-4 p-4 rounded-lg border border-border-light dark:border-border-dark has-[:checked]:border-primary has-[:checked]:bg-primary/10 cursor-pointer transition-all">
+<input checked="" class="radio-custom h-5 w-5 appearance-none rounded-full border-2 border-border-light dark:border-border-dark checked:border-primary focus:outline-none" name="payment_method" type="radio"/>
+<span class="font-medium">Tarjeta de Crédito/Débito</span>
+</label>
+<label class="flex items-center gap-4 p-4 rounded-lg border border-border-light dark:border-border-dark has-[:checked]:border-primary has-[:checked]:bg-primary/10 cursor-pointer transition-all">
+<input class="radio-custom h-5 w-5 appearance-none rounded-full border-2 border-border-light dark:border-border-dark checked:border-primary focus:outline-none" name="payment_method" type="radio"/>
+<span class="font-medium">Yape</span>
+</label>
+<label class="flex items-center gap-4 p-4 rounded-lg border border-border-light dark:border-border-dark has-[:checked]:border-primary has-[:checked]:bg-primary/10 cursor-pointer transition-all">
+<input class="radio-custom h-5 w-5 appearance-none rounded-full border-2 border-border-light dark:border-border-dark checked:border-primary focus:outline-none" name="payment_method" type="radio"/>
+<span class="font-medium">Plin</span>
+</label>
+</div>
+</div>
+<div class="p-4 sm:p-6 flex flex-col sm:flex-row gap-4">
+<button class="w-full sm:w-auto flex-1 bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-primary/90 transition-colors">
+                            Realizar Compra
+                        </button>
+<button class="w-full sm:w-auto bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark font-bold py-3 px-6 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">
+                            Cancelar Compra
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

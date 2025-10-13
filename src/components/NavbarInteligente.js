@@ -11,21 +11,25 @@ const Navbar = () => {
 
   useEffect(() => {
     // Verificar si hay un usuario loggeado
-    const usuarioGuardado = localStorage.getItem('usuario');
-    const rolGuardado = localStorage.getItem('rol');
+    const userData = localStorage.getItem('usuario');
     
-    if (usuarioGuardado && rolGuardado) {
-      setUsuario({
-        nombre: usuarioGuardado,
-        rol: rolGuardado
-      });
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        setUsuario({
+          nombre: user.usuario,
+          rol: user.rol
+        });
+      } catch (error) {
+        console.error('Error al parsear datos del usuario:', error);
+        localStorage.removeItem('usuario');
+        setUsuario(null);
+      }
     }
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('usuario');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('idUsuario');
     setUsuario(null);
     setShowProfileMenu(false);
     router.push('/');

@@ -31,9 +31,8 @@ const Login = () => {
       const data = await res.json();
       
       if (res.ok && data.user) {
-        localStorage.setItem('rol', data.user.rol);
-        localStorage.setItem('usuario', data.user.usuario);
-        localStorage.setItem('idUsuario', data.user.idUsuario);
+        // Guardar toda la información del usuario como JSON
+        localStorage.setItem('usuario', JSON.stringify(data.user));
         
         if (data.user.rol === 'admin') {
           window.location.replace('/admin');

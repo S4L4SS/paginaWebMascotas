@@ -109,8 +109,23 @@ const Navbar = () => {
               {showProfileMenu && (
                 <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-60">
                   <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{usuario.nombre}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">Rol: {usuario.rol}</p>
+                    <div className="flex items-center">
+                      <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center mr-3 overflow-hidden">
+                        {usuario.fotoPerfil ? (
+                          <img 
+                            src={`http://localhost:4000${usuario.fotoPerfil}`} 
+                            alt="Foto de perfil"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="material-symbols-outlined text-gray-500 dark:text-gray-400 text-sm">person</span>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{usuario.nombre || usuario.usuario}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Rol: {usuario.rol}</p>
+                      </div>
+                    </div>
                   </div>
                   <div className="py-1">
                     <Link href="/perfil" className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -180,11 +195,19 @@ const Navbar = () => {
             {usuario ? (
               <>
                 <div className="flex items-center py-3 px-3 bg-blue-50 dark:bg-blue-900/20 rounded-md mb-3">
-                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                    <span className="material-symbols-outlined text-white text-sm">person</span>
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center mr-3 flex-shrink-0 overflow-hidden">
+                    {usuario.fotoPerfil ? (
+                      <img 
+                        src={`http://localhost:4000${usuario.fotoPerfil}`} 
+                        alt="Foto de perfil"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="material-symbols-outlined text-gray-500 dark:text-gray-400 text-sm">person</span>
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{usuario.nombre}</p>
+                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{usuario.nombre || usuario.usuario}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">Rol: {usuario.rol}</p>
                   </div>
                 </div>

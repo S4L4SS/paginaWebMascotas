@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '', // Contraseña vacía para XAMPP
+  password: 'Sapphire_27', // Contraseña vacía para XAMPP
   database: 'mascotasdb',
 });
 

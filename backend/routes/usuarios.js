@@ -1,6 +1,44 @@
 const express = require('express');
 const router = express.Router();
 const connection = require('../config/db');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+// Configurar multer para subida de imágenes
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadDir = path.join(__dirname, '../uploads/profile-pictures');
+    // Crear directorio si no existe
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    // Generar nombre único: usuario_timestamp.extension
+    const uniqueName = `${req.body.userId || 'user'}_${Date.now()}${path.extname(file.originalname)}`;
+    cb(null, uniqueName);
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB límite
+  },
+  fileFilter: function (req, file, cb) {
+    // Solo permitir imágenes
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Solo se permiten archivos de imagen'));
+    }
+  }
+});
+
+// Servir archivos estáticos de imágenes de perfil
+router.use('/profile-pictures', express.static(path.join(__dirname, '../uploads/profile-pictures')));
 
 // Función para comparación exacta carácter por carácter
 function isExactMatch(str1, str2) {
@@ -129,6 +167,56 @@ router.put('/:id/rol', (req, res) => {
     (err, result) => {
       if (err) return res.status(500).json({ error: 'Error al actualizar rol' });
       res.json({ mensaje: 'Rol actualizado' });
+    }
+  );
+});
+
+// Endpoint para actualizar perfil con imagen
+router.put('/:id/perfil', upload.single('fotoPerfil'), (req, res) => {
+  const { id } = req.params;
+  const { usuario, correo, nombre, apellido, fechaNacimiento } = req.body;
+  
+  console.log(`[PERFIL] Actualizando perfil del usuario ID: ${id}`);
+  
+  const updateData = {
+    usuario,
+    correo,
+    nombre,
+    apellido,
+    fechaNacimiento
+  };
+  
+  // Si se subió una imagen, agregar la ruta
+  if (req.file) {
+    updateData.fotoPerfil = `/api/usuarios/profile-pictures/${req.file.filename}`;
+    console.log(`[PERFIL] Nueva foto: ${updateData.fotoPerfil}`);
+  }
+  
+  connection.query(
+    'UPDATE usuario SET ? WHERE idUsuario = ?',
+    [updateData, id],
+    (err, result) => {
+      if (err) {
+        console.log(`[PERFIL] Error al actualizar:`, err);
+        return res.status(500).json({ error: 'Error al actualizar perfil' });
+      }
+      
+      // Obtener datos actualizados del usuario
+      connection.query(
+        'SELECT idUsuario, usuario, correo, rol, fotoPerfil, nombre, apellido, fechaNacimiento FROM usuario WHERE idUsuario = ?',
+        [id],
+        (err, users) => {
+          if (err) {
+            return res.status(500).json({ error: 'Error al obtener usuario actualizado' });
+          }
+          
+          console.log(`[PERFIL] Perfil actualizado exitosamente`);
+          res.json({ 
+            mensaje: 'Perfil actualizado exitosamente',
+            user: users[0]
+          });
+        }
+      );
     }
   );
 });

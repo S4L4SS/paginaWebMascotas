@@ -57,6 +57,127 @@ cd ..
 ```
 
 ### 4. Configurar la base de datos
+1. Inicia XAMPP o tu servidor MySQL
+2. Ejecuta el script `database_setup_clean.sql` en phpMyAdmin o MySQL Workbench
+3. Configura las credenciales de base de datos en `backend/config/db.js`
+
+### 5. Ejecutar la aplicación
+
+#### Desarrollo (Frontend y Backend por separado)
+```bash
+# Terminal 1 - Frontend (puerto 3000)
+npm run dev
+
+# Terminal 2 - Backend (puerto 5000)
+cd backend
+npm start
+```
+
+#### Producción
+```bash
+npm run build
+npm run start
+```
+
+## 🗃️ Estructura de la Base de Datos
+
+### Tabla usuario
+- `idUsuario` (INT, Primary Key, Auto Increment)
+- `usuario` (VARCHAR(50), NOT NULL, UNIQUE)
+- `correo` (VARCHAR(100), NOT NULL, UNIQUE)
+- `contrasena` (VARCHAR(100), NOT NULL)
+- `nombre` (VARCHAR(50))
+- `apellido` (VARCHAR(50))
+- `fechaNacimiento` (DATE)
+- `rol` (VARCHAR(20), DEFAULT 'cliente')
+- `fotoPerfil` (VARCHAR(255), DEFAULT 'default-avatar.png')
+
+### Tabla producto
+- `idProducto` (INT, Primary Key, Auto Increment)
+- `nombre` (VARCHAR(100), NOT NULL)
+- `descripcion` (TEXT)
+- `precio` (DECIMAL(10,2), NOT NULL)
+- `stock` (INT, DEFAULT 0)
+- `categoria` (VARCHAR(50))
+- `imagen` (VARCHAR(255))
+
+## 👤 Usuarios por Defecto
+
+### Administrador
+- Usuario: `admin1`
+- Email: `admin@mascotas.com`
+- Contraseña: `admin123`
+- Rol: `admin`
+
+## 🌟 Funcionalidades Implementadas
+
+- ✅ Registro y login de usuarios
+- ✅ Sistema de roles (cliente/admin)
+- ✅ CRUD completo de productos (solo admin)
+- ✅ Gestión de perfiles de usuario
+- ✅ Catálogo de productos
+- ✅ Panel de administración
+- ✅ Navegación inteligente según rol
+- ✅ Subida de fotos de perfil
+
+## 📁 Estructura del Proyecto
+
+```
+/
+├── backend/               # Servidor Node.js
+│   ├── controllers/       # Controladores MVC
+│   ├── dao/              # Data Access Objects
+│   ├── config/           # Configuración BD
+│   ├── routes/           # Rutas API
+│   └── uploads/          # Archivos subidos
+├── src/
+│   ├── app/              # Páginas Next.js
+│   └── components/       # Componentes React
+├── public/               # Archivos estáticos
+└── database_setup_clean.sql # Script de BD
+```
+
+## 🔧 Configuración
+
+### Variables de Entorno (.env.local)
+```
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
+
+### Base de Datos (backend/config/db.js)
+```javascript
+const dbConfig = {
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'mascotasdb'
+};
+```
+
+## 🤝 Contribución
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📝 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+
+## 👨‍💻 Autor
+
+- **S4L4SS** - [GitHub Profile](https://github.com/S4L4SS)
+
+### 3. Instalar dependencias del backend
+```bash
+cd backend
+npm install
+cd ..
+```
+
+### 4. Configurar la base de datos
 1. Iniciar XAMPP o MySQL
 2. Crear una base de datos llamada `mascotasdb`
 3. Ejecutar las consultas SQL necesarias para crear las tablas

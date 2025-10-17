@@ -52,6 +52,22 @@ const UsuarioDAO = {
       callback(err, results);
     });
   },
+  updateProfile: (id, data, callback) => {
+    // Actualizar perfil incluyendo nombre, correo y foto de perfil
+    const allowedFields = ['usuario', 'correo', 'fotoPerfil', 'nombre', 'apellido', 'fechaNacimiento'];
+    const updateData = {};
+    
+    // Filtrar solo campos permitidos
+    Object.keys(data).forEach(key => {
+      if (allowedFields.includes(key)) {
+        updateData[key] = data[key];
+      }
+    });
+    
+    db.query('UPDATE usuario SET ? WHERE idUsuario = ?', [updateData, id], (err, results) => {
+      callback(err, results);
+    });
+  },
   delete: (id, callback) => {
     db.query('DELETE FROM usuario WHERE idUsuario = ?', [id], (err, results) => {
       callback(err, results);

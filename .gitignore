@@ -22,10 +22,28 @@
 
 # backend
 /backend/node_modules
+/backend/uploads/profile-pictures/*
+!backend/uploads/profile-pictures/.gitkeep
 
 # misc
 .DS_Store
 *.pem
+Thumbs.db
+
+# database files
+*.db
+*.sqlite
+*.sqlite3
+
+# logs
+logs
+*.log
+
+# temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
 
 # debug
 npm-debug.log*

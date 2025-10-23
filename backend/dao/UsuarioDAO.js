@@ -43,7 +43,23 @@ const UsuarioDAO = {
     });
   },
   create: (data, callback) => {
-    db.query('INSERT INTO usuario SET ?', data, (err, results) => {
+    const { usuario, correo, contrasena, nombre, apellido, fechaNacimiento, fotoPerfil, rol = 'cliente' } = data;
+    
+    const query = `
+      INSERT INTO usuario (usuario, correo, contrasena, nombre, apellido, fechaNacimiento, fotoPerfil, rol) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    
+    const values = [usuario, correo, contrasena, nombre, apellido, fechaNacimiento, fotoPerfil, rol];
+    
+    console.log('[DAO] Creando usuario con datos:', { usuario, correo, nombre, apellido, fechaNacimiento, fotoPerfil, rol });
+    
+    db.query(query, values, (err, results) => {
+      if (err) {
+        console.error('[DAO] Error en inserción:', err);
+      } else {
+        console.log('[DAO] Usuario creado con ID:', results.insertId);
+      }
       callback(err, results);
     });
   },

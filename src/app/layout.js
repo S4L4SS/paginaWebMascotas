@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavbarInteligente from "../components/NavbarInteligente";
+import { CarritoProvider } from "../contexts/CarritoContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,8 +26,10 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <NavbarInteligente />
-        {children}
+        <CarritoProvider>
+          <NavbarInteligente />
+          {children}
+        </CarritoProvider>
       </body>
     </html>
   );

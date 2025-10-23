@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
+import ReportesAdmin from '../../components/ReportesAdmin';
 
 // Componente principal del panel de administración
 export default function AdminPage() {
@@ -211,6 +212,19 @@ export default function AdminPage() {
               <span className="flex items-center">
                 <span className="material-symbols-outlined mr-2">group</span>
                 Gestión de Usuarios
+              </span>
+            </button>
+            <button
+              onClick={() => setTab('reportes')}
+              className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                tab === 'reportes'
+                  ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+              }`}
+            >
+              <span className="flex items-center">
+                <span className="material-symbols-outlined mr-2">assessment</span>
+                Reportes
               </span>
             </button>
           </nav>
@@ -575,6 +589,25 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </div>
+            </div>
+          </div>
+        )}
+
+        {tab === 'reportes' && (
+          <div className="space-y-6">
+            {/* Header */}
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Reportes y Estadísticas
+              </h1>
+              <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+                Analiza el rendimiento de tu tienda y genera reportes detallados
+              </p>
+            </div>
+            
+            {/* Componente de Reportes */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
+              <ReportesAdmin />
             </div>
           </div>
         )}

@@ -1,10 +1,12 @@
 "use client";
 import { useState, useEffect } from 'react';
+import { useCarrito } from '../../contexts/CarritoContext';
 
 export default function ProductosPage() {
   const [productos, setProductos] = useState([]);
   const [filtro, setFiltro] = useState('');
   const [loading, setLoading] = useState(true);
+  const { agregarProducto, obtenerCantidadProducto, estaEnCarrito } = useCarrito();
   
   // Estados para filtros avanzados
   const [ordenamiento, setOrdenamiento] = useState('alfabetico-asc');
@@ -95,6 +97,34 @@ export default function ProductosPage() {
   };
 
   const productosFiltrados = aplicarFiltros(productos);
+
+  // Función para agregar producto al carrito
+  const manejarAgregarAlCarrito = (producto) => {
+    const productoParaCarrito = {
+      idProducto: producto.idProducto,
+      nombre: producto.nombre,
+      precio: parseFloat(producto.precio || 0),
+      imagen: producto.imagen || null,
+      descripcion: producto.descripcion
+    };
+    
+    agregarProducto(productoParaCarrito);
+    
+    // Mostrar notificación temporal
+    const notificacion = document.createElement('div');
+    notificacion.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-opacity';
+    notificacion.textContent = `${producto.nombre} agregado al carrito`;
+    document.body.appendChild(notificacion);
+    
+    setTimeout(() => {
+      notificacion.style.opacity = '0';
+      setTimeout(() => {
+        if (document.body.contains(notificacion)) {
+          document.body.removeChild(notificacion);
+        }
+      }, 300);
+    }, 2000);
+  };
 
   const limpiarFiltros = () => {
     setFiltro('');
@@ -323,9 +353,15 @@ export default function ProductosPage() {
                         </p>
                       )}
                     </div>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1">
+                    <button 
+                      onClick={() => manejarAgregarAlCarrito(producto)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1"
+                    >
                       <span className="material-symbols-outlined text-sm">shopping_cart</span>
-                      Agregar
+                      {estaEnCarrito(producto.idProducto) 
+                        ? `En carrito (${obtenerCantidadProducto(producto.idProducto)})` 
+                        : 'Agregar'
+                      }
                     </button>
                   </div>
                   

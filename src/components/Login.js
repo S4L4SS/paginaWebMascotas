@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Registro from './Registro';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,11 +11,6 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [registerData, setRegisterData] = useState({
-    usuario: '',
-    correo: '',
-    contrasena: ''
-  });
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -50,32 +46,15 @@ const Login = () => {
     }
   };
 
-  const handleRegisterSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
-
-    try {
-      const res = await fetch('http://localhost:4000/api/usuarios/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(registerData)
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setError('');
-        setShowRegister(false);
-        setFormData({ usuario: registerData.usuario, contrasena: registerData.contrasena });
-        // Opcional: auto-login después del registro
-      } else {
-        setError(data.error || 'Error al registrar usuario');
-      }
-    } catch (err) {
-      setError('Error de conexión al servidor');
-    } finally {
-      setLoading(false);
+  const handleRegisterSuccess = (usuario, correo) => {
+    if (usuario && correo) {
+      // Si el registro fue exitoso, cambiar a modo login y precargar datos
+      setShowRegister(false);
+      setFormData({ usuario: usuario, contrasena: '' });
+      setError('');
+    } else {
+      // Si es null, significa que quieren volver al login
+      setShowRegister(false);
     }
   };
 
@@ -87,12 +66,13 @@ const Login = () => {
             Bienvenido a Mundo Mascotas
           </h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Inicia sesión o crea una cuenta para empezar
+            {showRegister ? 'Crea tu cuenta para empezar' : 'Inicia sesión para continuar'}
           </p>
         </div>
 
+        {/* Contenedor principal con botones superiores siempre visibles */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-          {/* Botones de formulario */}
+          {/* Botones de formulario - SIEMPRE VISIBLES */}
           <div className="flex mb-6 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
             <button
               type="button"
@@ -170,61 +150,21 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center justify-center gap-2"
               >
-                {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+                {loading ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Iniciando sesión...
+                  </>
+                ) : (
+                  'Iniciar Sesión'
+                )}
               </button>
             </form>
           ) : (
-            /* Formulario de Registro */
-            <form onSubmit={handleRegisterSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="reg_usuario" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Usuario
-                </label>
-                <input
-                  type="text"
-                  id="reg_usuario"
-                  value={registerData.usuario}
-                  onChange={(e) => setRegisterData({ ...registerData, usuario: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-100"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="correo" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Correo electrónico
-                </label>
-                <input
-                  type="email"
-                  id="correo"
-                  value={registerData.correo}
-                  onChange={(e) => setRegisterData({ ...registerData, correo: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-100"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="reg_contrasena" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Contraseña
-                </label>
-                <input
-                  type="password"
-                  id="reg_contrasena"
-                  value={registerData.contrasena}
-                  onChange={(e) => setRegisterData({ ...registerData, contrasena: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-100"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              >
-                {loading ? 'Registrando...' : 'Registrarse'}
-              </button>
-            </form>
+            /* Formulario de Registro - Con tema consistente */
+            <Registro onRegister={handleRegisterSuccess} />
           )}
         </div>
       </div>

@@ -1,4 +1,6 @@
 const UsuarioDAO = require('../dao/UsuarioDAO');
+const path = require('path');
+const fs = require('fs');
 
 // Función para comparación exacta carácter por carácter
 function isExactMatch(str1, str2) {
@@ -73,19 +75,111 @@ const UsuarioController = {
     });
   },
   register: (req, res) => {
-    const { usuario, correo, contrasena } = req.body;
+    const { usuario, correo, contrasena, nombre, apellido, fechaNacimiento } = req.body;
     
-    // Verificar si ya existe un usuario con el mismo nombre o email (ignorando mayúsculas y tildes)
+    console.log('[REGISTER] Datos recibidos:', { usuario, correo, nombre, apellido, fechaNacimiento });
+    
+    // Validar campos obligatorios
+    if (!usuario || !correo || !contrasena || !nombre || !apellido || !fechaNacimiento) {
+      return res.status(400).json({ 
+        error: 'Todos los campos son obligatorios (usuario, correo, contraseña, nombre, apellido, fecha de nacimiento)' 
+      });
+    }
+    
+    // Validar formato de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(correo)) {
+      return res.status(400).json({ error: 'Formato de correo electrónico inválido' });
+    }
+    
+    // Validar longitud de contraseña
+    if (contrasena.length < 6) {
+      return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres' });
+    }
+    
+    // Validar fecha de nacimiento (mayor de edad)
+    const fechaNac = new Date(fechaNacimiento);
+    const hoy = new Date();
+    const edad = hoy.getFullYear() - fechaNac.getFullYear();
+    if (edad < 18) {
+      return res.status(400).json({ error: 'Debes ser mayor de 18 años para registrarte' });
+    }
+    
+    // Manejar foto de perfil
+    let fotoPerfil = 'default-avatar.svg'; // Valor por defecto
+    if (req.file) {
+      try {
+        // Generar nombre único para el archivo
+        const fileExtension = path.extname(req.file.originalname);
+        const fileName = `${usuario}_${Date.now()}${fileExtension}`;
+        fotoPerfil = fileName;
+        
+        // Crear directorio si no existe
+        const uploadDir = path.join(__dirname, '../uploads/profile-pictures');
+        if (!fs.existsSync(uploadDir)) {
+          fs.mkdirSync(uploadDir, { recursive: true });
+        }
+        
+        // Mover archivo a la ubicación final
+        const finalPath = path.join(uploadDir, fileName);
+        fs.writeFileSync(finalPath, req.file.buffer);
+        
+        console.log('[REGISTER] Foto de perfil guardada:', fileName);
+      } catch (error) {
+        console.error('[REGISTER] Error al guardar foto:', error);
+        return res.status(500).json({ error: 'Error al procesar la foto de perfil' });
+      }
+    }
+    
+    // Verificar si ya existe un usuario con el mismo nombre o email
     UsuarioDAO.checkUserExists(usuario, correo, (err, exists) => {
-      if (err) return res.status(500).json({ error: 'Error en la base de datos' });
+      if (err) {
+        console.error('[REGISTER] Error verificando usuario existente:', err);
+        return res.status(500).json({ error: 'Error en la base de datos' });
+      }
+      
       if (exists) {
         return res.status(400).json({ error: 'Ya existe un usuario con ese nombre o email' });
       }
       
+      // Crear objeto con todos los datos del usuario
+      const userData = {
+        usuario,
+        correo,
+        contrasena,
+        nombre,
+        apellido,
+        fechaNacimiento,
+        fotoPerfil,
+        rol: 'cliente'
+      };
+      
       // Si no existe, crear el usuario
-      UsuarioDAO.create({ usuario, correo, contrasena }, (err, result) => {
-        if (err) return res.status(500).json({ error: 'Error al registrar usuario' });
-        res.json({ mensaje: 'Registro exitoso', id: result.insertId });
+      UsuarioDAO.create(userData, (err, result) => {
+        if (err) {
+          console.error('[REGISTER] Error creando usuario:', err);
+          
+          // Si hay error y se guardó una foto, eliminarla
+          if (req.file && fotoPerfil !== 'default-avatar.png') {
+            try {
+              const photoPath = path.join(__dirname, '../uploads/profile-pictures', fotoPerfil);
+              if (fs.existsSync(photoPath)) {
+                fs.unlinkSync(photoPath);
+              }
+            } catch (deleteError) {
+              console.error('[REGISTER] Error eliminando foto tras fallo:', deleteError);
+            }
+          }
+          
+          return res.status(500).json({ error: 'Error al registrar usuario' });
+        }
+        
+        console.log('[REGISTER] Usuario registrado exitosamente:', result.insertId);
+        res.json({ 
+          mensaje: 'Registro exitoso', 
+          id: result.insertId,
+          fotoPerfil: fotoPerfil
+        });
       });
     });
   },

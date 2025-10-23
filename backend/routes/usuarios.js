@@ -113,39 +113,101 @@ router.post('/login', (req, res) => {
   );
 });
 
-// Register
-router.post('/register', (req, res) => {
-  const { usuario, correo, contrasena } = req.body;
+// Register - Con soporte para foto de perfil
+router.post('/register', upload.single('fotoPerfil'), (req, res) => {
+  const { usuario, correo, contrasena, nombre, apellido, fechaNacimiento } = req.body;
   
-  // Validar que todos los campos están presentes
-  if (!usuario || !correo || !contrasena) {
-    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+  console.log('[REGISTER] Datos recibidos:', { usuario, correo, nombre, apellido, fechaNacimiento });
+  console.log('[REGISTER] Archivo recibido:', req.file ? req.file.filename : 'Sin archivo');
+  
+  // Validar que todos los campos obligatorios están presentes
+  if (!usuario || !correo || !contrasena || !nombre || !apellido || !fechaNacimiento) {
+    return res.status(400).json({ 
+      error: 'Todos los campos son obligatorios (usuario, correo, contraseña, nombre, apellido, fecha de nacimiento)' 
+    });
   }
+  
+  // Validar formato de email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(correo)) {
+    return res.status(400).json({ error: 'Formato de correo electrónico inválido' });
+  }
+  
+  // Validar longitud de contraseña
+  if (contrasena.length < 6) {
+    return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres' });
+  }
+  
+  // Validar fecha de nacimiento (mayor de edad)
+  const fechaNac = new Date(fechaNacimiento);
+  const hoy = new Date();
+  const edad = hoy.getFullYear() - fechaNac.getFullYear();
+  if (edad < 18) {
+    return res.status(400).json({ error: 'Debes ser mayor de 18 años para registrarte' });
+  }
+  
+  // Determinar nombre de foto de perfil
+  const fotoPerfil = req.file ? req.file.filename : 'default-avatar.svg';
   
   // Verificar si el usuario ya existe
   connection.query('SELECT * FROM usuario WHERE usuario = ? OR correo = ?', [usuario, correo], (err, existing) => {
-    if (err) return res.status(500).json({ error: 'Error en el servidor' });
+    if (err) {
+      console.error('[REGISTER] Error verificando usuario existente:', err);
+      return res.status(500).json({ error: 'Error en el servidor' });
+    }
+    
     if (existing.length > 0) {
+      // Si hay error y se subió una foto, eliminarla
+      if (req.file) {
+        try {
+          fs.unlinkSync(req.file.path);
+        } catch (deleteError) {
+          console.error('[REGISTER] Error eliminando foto tras conflicto:', deleteError);
+        }
+      }
       return res.status(400).json({ error: 'El usuario o correo ya existe' });
     }
     
-    // Insertar nuevo usuario con rol por defecto 'cliente'
-    connection.query(
-      'INSERT INTO usuario (usuario, correo, contrasena, rol) VALUES (?, ?, ?, ?)',
-      [usuario, correo, contrasena, 'cliente'],
-      (err, result) => {
-        if (err) return res.status(500).json({ error: 'Error al registrar usuario' });
-        res.json({ 
-          mensaje: 'Registro exitoso', 
-          user: {
-            idUsuario: result.insertId,
-            usuario: usuario,
-            correo: correo,
-            rol: 'cliente'
+    // Insertar nuevo usuario con todos los campos
+    const query = `
+      INSERT INTO usuario (usuario, correo, contrasena, nombre, apellido, fechaNacimiento, fotoPerfil, rol) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    
+    const values = [usuario, correo, contrasena, nombre, apellido, fechaNacimiento, fotoPerfil, 'cliente'];
+    
+    connection.query(query, values, (err, result) => {
+      if (err) {
+        console.error('[REGISTER] Error insertando usuario:', err);
+        
+        // Si hay error y se subió una foto, eliminarla
+        if (req.file) {
+          try {
+            fs.unlinkSync(req.file.path);
+          } catch (deleteError) {
+            console.error('[REGISTER] Error eliminando foto tras fallo de inserción:', deleteError);
           }
-        });
+        }
+        
+        return res.status(500).json({ error: 'Error al registrar usuario' });
       }
-    );
+      
+      console.log('[REGISTER] Usuario registrado exitosamente con ID:', result.insertId);
+      
+      res.json({ 
+        mensaje: 'Registro exitoso', 
+        user: {
+          idUsuario: result.insertId,
+          usuario: usuario,
+          correo: correo,
+          nombre: nombre,
+          apellido: apellido,
+          fechaNacimiento: fechaNacimiento,
+          fotoPerfil: fotoPerfil,
+          rol: 'cliente'
+        }
+      });
+    });
   });
 });
 

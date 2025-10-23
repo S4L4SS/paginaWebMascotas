@@ -20,7 +20,7 @@ CREATE TABLE usuario (
   apellido VARCHAR(50) DEFAULT NULL,
   fechaNacimiento DATE DEFAULT NULL,
   rol VARCHAR(20) DEFAULT 'cliente',
-  fotoPerfil VARCHAR(255) DEFAULT 'default-avatar.png',
+  fotoPerfil VARCHAR(255) DEFAULT 'default-avatar.svg',
   fechaCreacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   fechaActualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

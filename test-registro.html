@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Registro</title>
+</head>
+<body>
+    <h2>Prueba de Registro</h2>
+    <form id="registroForm">
+        <label>Usuario: <input type="text" name="usuario" value="testuser" required></label><br><br>
+        <label>Nombre: <input type="text" name="nombre" value="Test" required></label><br><br>
+        <label>Apellido: <input type="text" name="apellido" value="User" required></label><br><br>
+        <label>Email: <input type="email" name="correo" value="test@email.com" required></label><br><br>
+        <label>Contraseña: <input type="password" name="contrasena" value="123456" required></label><br><br>
+        <label>Fecha Nacimiento: <input type="date" name="fechaNacimiento" value="1995-01-01" required></label><br><br>
+        <label>Foto: <input type="file" name="fotoPerfil" accept="image/*"></label><br><br>
+        <button type="submit">Registrar</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        document.getElementById('registroForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch('http://localhost:4000/api/usuarios/register', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                document.getElementById('resultado').innerHTML = 
+                    '<h3>Resultado:</h3><pre>' + JSON.stringify(result, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('resultado').innerHTML = 
+                    '<h3>Error:</h3><pre>' + error.message + '</pre>';
+            }
+        });
+    </script>
+</body>
+</html>

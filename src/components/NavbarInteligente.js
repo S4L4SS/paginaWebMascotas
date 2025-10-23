@@ -2,12 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useCarrito } from '../contexts/CarritoContext';
 
 const Navbar = () => {
   const [usuario, setUsuario] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const router = useRouter();
+  const { cantidadTotal } = useCarrito();
 
   useEffect(() => {
     // Verificar si hay un usuario loggeado
@@ -86,9 +88,14 @@ const Navbar = () => {
         {/* Botones Desktop */}
         <div className="hidden md:flex items-center gap-4 botones-escritorio">
           <Link href="/carrito">
-            <button className="flex items-center justify-center gap-2 rounded-lg h-10 px-4 text-sm font-bold border border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800 transition-colors boton-carrito">
+            <button className="flex items-center justify-center gap-2 rounded-lg h-10 px-4 text-sm font-bold border border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-800 transition-colors boton-carrito relative">
               <span className="material-symbols-outlined">shopping_cart</span>
               <span className="texto-carrito">Carrito</span>
+              {cantidadTotal > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                  {cantidadTotal}
+                </span>
+              )}
             </button>
           </Link>
 
@@ -182,12 +189,17 @@ const Navbar = () => {
           </Link>
           <Link 
             href="/carrito" 
-            className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors"
+            className="flex items-center py-3 px-2 text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors relative"
             onClick={() => setIsMenuOpen(false)}
           >
             <button className="flex items-center w-full boton-carrito-movil">
               <span className="material-symbols-outlined mr-3">shopping_cart</span>
               Carrito
+              {cantidadTotal > 0 && (
+                <span className="ml-auto bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                  {cantidadTotal}
+                </span>
+              )}
             </button>
           </Link>
           

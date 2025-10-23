@@ -1,11 +1,12 @@
--- Script SQL limpio para la base de datos de mascotas
--- Basado en la estructura actual del proyecto
+-- Script completo para crear la base de datos de la tienda de mascotas
+-- Incluye todas las tablas: usuarios, productos, métricas y compras
 
--- Crear la base de datos
 CREATE DATABASE IF NOT EXISTS mascotasdb;
 USE mascotasdb;
 
 -- Eliminar tablas existentes si existen (para empezar limpio)
+DROP TABLE IF EXISTS compras;
+DROP TABLE IF EXISTS metricas;
 DROP TABLE IF EXISTS producto;
 DROP TABLE IF EXISTS usuario;
 
@@ -24,7 +25,7 @@ CREATE TABLE usuario (
   fechaActualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Crear tabla producto
+-- Crear tabla producto con columna categoria incluida
 CREATE TABLE producto (
   idProducto INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(100) NOT NULL,
@@ -35,6 +36,34 @@ CREATE TABLE producto (
   imagen VARCHAR(255) DEFAULT NULL,
   fechaCreacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   fechaActualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Crear tabla de métricas para rastrear acciones del sistema
+CREATE TABLE metricas (
+  idMetrica INT AUTO_INCREMENT PRIMARY KEY,
+  tipo VARCHAR(50) NOT NULL, -- 'compra', 'registro_usuario', 'visita_producto', etc.
+  entidad VARCHAR(50) DEFAULT NULL, -- 'producto', 'usuario', etc.
+  entidadId INT DEFAULT NULL, -- ID del producto/usuario relacionado
+  valor DECIMAL(10,2) DEFAULT 0, -- Monto de la compra, cantidad, etc.
+  metadatos JSON DEFAULT NULL, -- Información adicional en formato JSON
+  fechaCreacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_tipo_fecha (tipo, fechaCreacion),
+  INDEX idx_entidad_fecha (entidad, entidadId, fechaCreacion)
+);
+
+-- Crear tabla de compras para rastrear las transacciones
+CREATE TABLE compras (
+  idCompra INT AUTO_INCREMENT PRIMARY KEY,
+  idUsuario INT NOT NULL,
+  idProducto INT NOT NULL,
+  cantidad INT NOT NULL DEFAULT 1,
+  precio DECIMAL(10,2) NOT NULL,
+  total DECIMAL(10,2) NOT NULL,
+  fechaCompra TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario) ON DELETE CASCADE,
+  FOREIGN KEY (idProducto) REFERENCES producto(idProducto) ON DELETE CASCADE,
+  INDEX idx_fecha_compra (fechaCompra),
+  INDEX idx_producto_fecha (idProducto, fechaCompra)
 );
 
 -- Insertar usuario administrador por defecto
@@ -48,19 +77,13 @@ VALUES ('cliente1', 'cliente@ejemplo.com', 'cliente123', 'Juan', 'Pérez', '1990
 -- Insertar algunos productos de ejemplo
 INSERT INTO producto (nombre, descripcion, precio, stock, categoria) VALUES
 ('Alimento Premium para Perros', 'Alimento balanceado de alta calidad para perros adultos', 25.99, 50, 'Alimento'),
-('Collar Antipulgas', 'Collar efectivo contra pulgas y garrapatas', 15.50, 30, 'Accesorios'),
-('Juguete Kong Clásico', 'Juguete resistente para perros de todas las edades', 12.75, 25, 'Juguetes'),
-('Cama Ortopédica', 'Cama cómoda y ortopédica para mascotas mayores', 89.99, 15, 'Camas'),
-('Shampoo Hipoalergénico', 'Shampoo especial para pieles sensibles', 18.25, 40, 'Higiene');
+('Juguete para Gatos', 'Ratón de juguete con hierba gatera', 15.50, 35, 'Juguetes');
 
--- Verificar las tablas creadas
+-- Verificar la creación de tablas
+SHOW TABLES;
+
+-- Mostrar estructura de las tablas principales
 DESCRIBE usuario;
 DESCRIBE producto;
-
--- Mostrar datos insertados
-SELECT * FROM usuario;
-SELECT * FROM producto;
-
--- Consultas útiles para verificar el funcionamiento
-SELECT usuario, correo, rol, fechaCreacion FROM usuario;
-SELECT nombre, precio, stock, categoria FROM producto WHERE stock > 0;
+DESCRIBE metricas;
+DESCRIBE compras;

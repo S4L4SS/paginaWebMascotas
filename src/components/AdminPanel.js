@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import ReportesAdmin from './ReportesAdmin';
 
 // Componente para la gestión de productos
 function ProductosAdmin() {
@@ -267,7 +268,7 @@ function AdminPanel() {
   const [tab, setTab] = useState('productos');
 
   return (
-    <section className="card max-w-2xl mx-auto mt-8 flex flex-col items-center">
+    <section className="card max-w-4xl mx-auto mt-8 flex flex-col items-center">
       <h2 className="font-poppins text-xl font-bold text-primary mb-4 text-center">Panel de Administración</h2>
       <div className="flex mb-6 w-full justify-center">
         <button
@@ -278,6 +279,10 @@ function AdminPanel() {
           className={`flex-1 py-2 font-bold border-b-2 ${tab === 'usuarios' ? 'border-orange-400 text-orange-500' : 'border-gray-200 text-gray-500'}`}
           onClick={() => setTab('usuarios')}
         >Usuarios</button>
+        <button
+          className={`flex-1 py-2 font-bold border-b-2 ${tab === 'reportes' ? 'border-orange-400 text-orange-500' : 'border-gray-200 text-gray-500'}`}
+          onClick={() => setTab('reportes')}
+        >Reportes</button>
       </div>
       <div className="w-full">
         {tab === 'productos' && (
@@ -285,6 +290,9 @@ function AdminPanel() {
         )}
         {tab === 'usuarios' && (
           <UsuariosAdmin />
+        )}
+        {tab === 'reportes' && (
+          <ReportesAdmin />
         )}
       </div>
     </section>

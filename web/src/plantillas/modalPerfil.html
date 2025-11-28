@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>Mundo Mascotas - Editar Perfil</title>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Be+Vietnam+Pro:wght@400;500;700;900&amp;family=Noto+Sans:wght@400;500;700;900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#13a4ec",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101c22",
+            "foreground-light": "#111618",
+            "foreground-dark": "#f6f7f8",
+            "card-light": "#ffffff",
+            "card-dark": "#1a2831",
+            "muted-light": "#617c89",
+            "muted-dark": "#a0b0b9",
+            "border-light": "#dbe2e6",
+            "border-dark": "#31434f",
+          },
+          fontFamily: {
+            "display": ["Be Vietnam Pro", "Noto Sans", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .form-input:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+      box-shadow: 0 0 0 2px var(--tw-ring-color);
+    }
+  </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark">
+<div class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+<div class="bg-card-light dark:bg-card-dark rounded-xl shadow-2xl w-full max-w-md">
+<div class="p-6 sm:p-8">
+<h2 class="text-2xl font-bold text-foreground-light dark:text-foreground-dark mb-6">Editar Perfil</h2>
+<div class="flex flex-col items-center mb-6">
+<div class="relative group">
+<div class="w-24 h-24 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBii6We0KcWHNnBF_tMbqcFiUKAEv7HF5n4eiUdzcVp3F7CQ9O7fH4aP7MGRfjAx5cQFtrsGg6lrTpRvFZFWUqMyH7VVJd5GGoDefDfmvUv_kTV8vVduPi06DW8hQPrUgYoe1sJDiYm66l_QORH_4BZuG223QMvo9sa-YTOR_R0sy8kvI1ps1JH4EObTOw6fhy-j_S5rLNEhx5T9DYJU6Bx2yjxy1j93i-LxyPOtCodcciMTGracDj-9SghwnTiHA8QXZsfjtBLqLU");'></div>
+<label class="absolute inset-0 flex items-center justify-center bg-black/50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" for="profile-picture-upload">
+<svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M208,56H180.28L166.65,35.56A8,8,0,0,0,160,32H96a8,8,0,0,0-6.65,3.56L75.72,56H48A24,24,0,0,0,24,80V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V80A24,24,0,0,0,208,56Zm16,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V80a8,8,0,0,1,8-8H80a8,8,0,0,0,6.66-3.56L100.28,48h55.44l13.62,20.44A8,8,0,0,0,176,72h32a8,8,0,0,1,8,8ZM128,88a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,88Zm0,72a28,28,0,1,1,28-28A28,28,0,0,1,128,160Z"></path></svg>
+</label>
+<input class="hidden" id="profile-picture-upload" type="file"/>
+</div>
+</div>
+<form class="space-y-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="text-sm font-medium text-muted-light dark:text-muted-dark" for="first-name">Nombre</label>
+<input class="form-input mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary/50 text-foreground-light dark:text-foreground-dark placeholder-muted-light dark:placeholder-muted-dark/70" id="first-name" placeholder="Juan" type="text"/>
+</div>
+<div>
+<label class="text-sm font-medium text-muted-light dark:text-muted-dark" for="last-name">Apellido</label>
+<input class="form-input mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary/50 text-foreground-light dark:text-foreground-dark placeholder-muted-light dark:placeholder-muted-dark/70" id="last-name" placeholder="Pérez" type="text"/>
+</div>
+</div>
+<div>
+<label class="text-sm font-medium text-muted-light dark:text-muted-dark" for="birth-date">Fecha de Nacimiento</label>
+<input class="form-input mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary/50 text-foreground-light dark:text-foreground-dark placeholder-muted-light dark:placeholder-muted-dark/70" id="birth-date" type="date"/>
+</div>
+</form>
+</div>
+<div class="px-6 sm:px-8 py-4 bg-background-light/50 dark:bg-background-dark/50 flex justify-end items-center space-x-3 rounded-b-xl">
+<button class="px-4 py-2 text-sm font-bold text-muted-light dark:text-muted-dark bg-transparent hover:bg-primary/10 rounded-lg transition-colors" type="button">
+          Cancelar
+        </button>
+<button class="px-6 py-2 text-sm font-bold text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background-light dark:focus:ring-offset-background-dark focus:ring-primary" type="submit">
+          Guardar Cambios
+        </button>
+</div>
+</div>
+</div>
+
+</body></html>

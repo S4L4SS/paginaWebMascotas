@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">Error 500 - Error del Servidor</ui:define>
+    
+    <ui:define name="content">
+        <b:container style="text-align: center; margin-top: 50px;">
+            <b:row>
+                <b:column col-md="8" offset="2">
+                    <b:panel title="Error 500" look="danger">
+                        <h1 style="font-size: 100px; margin: 20px 0;">
+                            <b:iconAwesome name="exclamation-circle"/>
+                        </h1>
+                        <h2>Error Interno del Servidor</h2>
+                        <p style="font-size: 18px; margin: 20px 0;">
+                            Lo sentimos, ha ocurrido un error en el servidor. Por favor, intenta de nuevo más tarde.
+                        </p>
+                        <hr/>
+                        <b:button value="Volver al Inicio" 
+                                 outcome="/index.xhtml"
+                                 look="primary" 
+                                 size="lg"
+                                 icon="home"/>
+                        <b:button value="Dashboard" 
+                                 outcome="/dashboard.xhtml"
+                                 look="warning" 
+                                 size="lg"
+                                 icon="dashboard"
+                                 style="margin-left: 10px;"/>
+                    </b:panel>
+                </b:column>
+            </b:row>
+        </b:container>
+    </ui:define>
+</ui:composition>
+</html>

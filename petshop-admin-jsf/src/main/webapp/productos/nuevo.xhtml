@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">Nuevo Producto - PetShop Admin</ui:define>
+    
+    <ui:define name="content">
+        <h:form id="nuevoProductoForm">
+            <!-- Mensajes de feedback con BootFaces -->
+            <b:messages/>
+            
+            <!-- Header -->
+            <b:row>
+                <b:column>
+                    <h1>
+                        <b:iconAwesome name="plus-circle"/> Nuevo Producto
+                    </h1>
+                    <hr/>
+                </b:column>
+            </b:row>
+            
+            <!-- Formulario -->
+            <b:row>
+                <b:column col-md="8" offset="2">
+                    <b:panel title="Datos del Producto" look="primary">
+                        <b:row>
+                            <b:column col-md="12">
+                                <b:inputText label="Nombre del Producto" 
+                                           value="#{productoBean.nuevoProducto.nombre}"
+                                           required="true"
+                                           requiredMessage="El nombre es obligatorio"
+                                           placeholder="Ej: Comida para perros Royal Canin">
+                                    <f:validator validatorId="javax.faces.Length" minimum="3" maximum="100"/>
+                                </b:inputText>
+                            </b:column>
+                        </b:row>
+                        
+                        <b:row>
+                            <b:column col-md="12">
+                                <b:inputTextarea label="Descripción" 
+                                               value="#{productoBean.nuevoProducto.descripcion}"
+                                               rows="4"
+                                               placeholder="Descripción detallada del producto"/>
+                            </b:column>
+                        </b:row>
+                        
+                        <b:row>
+                            <b:column col-md="6">
+                                <b:inputText label="Precio (S/.)" 
+                                           value="#{productoBean.nuevoProducto.precio}"
+                                           required="true"
+                                           requiredMessage="El precio es obligatorio"
+                                           placeholder="0.00">
+                                    <f:convertNumber type="number" minFractionDigits="2" maxFractionDigits="2"/>
+                                </b:inputText>
+                            </b:column>
+                            
+                            <b:column col-md="6">
+                                <b:inputText label="Stock Inicial" 
+                                           value="#{productoBean.nuevoProducto.stock}"
+                                           required="true"
+                                           requiredMessage="El stock es obligatorio"
+                                           placeholder="0">
+                                    <f:convertNumber integerOnly="true"/>
+                                </b:inputText>
+                            </b:column>
+                        </b:row>
+                        
+                        <b:row>
+                            <b:column col-md="12">
+                                <b:inputText label="URL de Imagen (opcional)" 
+                                           value="#{productoBean.nuevoProducto.imagen}"
+                                           placeholder="http://ejemplo.com/imagen.jpg o ruta local"/>
+                            </b:column>
+                        </b:row>
+                        
+                        <hr/>
+                        
+                        <b:row>
+                            <b:column col-md="6">
+                                <b:commandButton value="Guardar Producto" 
+                                               action="#{productoBean.guardarNuevoProducto()}"
+                                               look="success" 
+                                               icon="save"
+                                               size="lg"
+                                               style="width: 100%;"/>
+                            </b:column>
+                            <b:column col-md="6">
+                                <b:commandButton value="Cancelar" 
+                                               action="#{productoBean.cancelarNuevoProducto()}"
+                                               look="default" 
+                                               icon="times"
+                                               size="lg"
+                                               immediate="true"
+                                               style="width: 100%;"/>
+                            </b:column>
+                        </b:row>
+                    </b:panel>
+                </b:column>
+            </b:row>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Mundo Mascotas - Productos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+  <link href="productos.css" rel="stylesheet"/>
+  <script src="productos.js" defer></script>
+</head>
+<body class="font-display text-gray-800 bg-background-light">
+  <div class="min-h-screen">
+    <header class="header">
+      <div class="logo-container">
+        <h1 class="logo-text">Mundo Mascotas🐶</h1>
+      </div>
+      <button class="hamburger-button" id="hamburger-button">
+        <span class="material-symbols-outlined text-3xl">menu</span>
+      </button>
+      <!-- Menú móvil: incluye todo lo que se toggleará -->
+      <nav id="mobile-menu" class="hidden">
+        <div class="mobile-nav-items">
+          <a href="index.html" class="nav-link">Inicio</a>
+          <a href="productos.html" class="nav-link">Productos</a>
+        </div>
+        
+        <!-- Duplicado de botones para móvil -->
+        <div class="mobile-button-group">
+          <a href="carrito.html" style="text-decoration: none;">
+          <button class="cart-button">
+            <span class="material-symbols-outlined">shopping_cart</span> Carrito
+          </button>
+          </a>
+          <button class="login-button">
+            <a href="iniciarSesion.html">Iniciar Sesión</a>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Menú desktop: solo enlaces (se oculta en móvil) -->
+      <div class="desktop-menu">
+        <a href="index.html" class="nav-link">Inicio</a>
+        <a href="productos.html" class="nav-link">Productos</a>
+      </div>
+      <!-- Botones desktop: originales -->
+      <div class="button-group">
+        <a href="carrito.html" style="text-decoration: none;">
+        <button class="cart-button">
+          <span class="material-symbols-outlined">shopping_cart</span>          <span class="cart-text">Carrito</span>
+        </button>
+        </a>
+        <button class="login-button">
+          <a href="iniciarSesion.html">Iniciar Sesión</a>
+        </button>
+      </div>
+    </header>
+    
+    <main class="main-container">
+      <div class="grid-container">
+        <aside class="sidebar">
+          <div class="sidebar-content">
+            <div class="search-container">
+              <input class="search-input" placeholder="Buscar" type="search"/>
+              <div class="search-icon">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
+              </div>
+            </div>
+            <h3 class="filter-title">Filtrar por</h3>
+            <div class="filter-group">
+              <div>
+                <label class="filter-label" for="pet-type">Tipo de Mascota</label>
+                <select class="filter-select" id="pet-type">
+                  <option>Todos</option>
+                  <option>Perros</option>
+                  <option>Gatos</option>
+                  <option>Aves</option>
+                  <option>Otros</option>
+                </select>
+              </div>
+              <div>
+                <label class="filter-label" for="category">Categoría</label>
+                <select class="filter-select" id="category">
+                  <option>Todas</option>
+                  <option>Alimento</option>
+                  <option>Juguetes</option>
+                  <option>Accesorios</option>
+                </select>
+              </div>
+              <div>
+                <label class="filter-label" for="price-range">Rango de Precios</label>
+                <input class="price-range" id="price-range" type="range"/>
+                <div class="price-range-labels">
+                  <span>$0</span>
+                  <span>$500+</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+        <div class="products-container">
+          <h1 class="products-title">Productos</h1>
+          <div class="products-grid">
+            <div class="product-card">
+              <div class="product-image-container">
+                <img alt="Alimento para perros" class="product-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsg-YhTkJa72dWHPqyWb0lOf5Y65uSnGxNUvVPg1NeF-fWmUDETvmirxYw-3H9DTm-l8KRVJfJQqyqvwjEOXrV_3kQs96YMujK6ZGJKNDK3fujhG8c-aqo6c8XaYE0SEQGZCKujf14y_a90PmgJ4Qkn4pHC0toW3AYBtXbsFwlD4-6BHd8gscR3vnZOoVDn2Z325dBIGkGpOdaHAghZd94fSnpha7KCHTqZP5gMi-ffORGrC6YLFq8xKMmUaFg7X47z9Nh6DwF7GU"/>
+                <div class="product-overlay">
+                  <button class="add-to-cart">Añadir al Carrito</button>
+                </div>
+              </div>
+              <div class="product-info">
+                <h4 class="product-name">Alimento Premium para Perros</h4>
+                <p class="product-description">Sabor Carne, 10kg</p>
+                <p class="product-price">$45.99</p>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image-container">
+                <img alt="Juguete para gatos" class="product-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFi7eqI9vkm32iGzPp0SDLGnlz6CslLtrQiG4L6dzOXdYNu0zjxO4hQFcuy23Iz32ZkVYml4posciK3gJXVorpUm7MMGoDlsM8vUtXvmM7C3epeJwJrFm9HmoynseRMwvJOBcu_84-nR_R1OeKyd9x3AYu4J9gaMbWKq6HxOGf2HQyzwmVFryxKjbsSZsnJZsZx7xn0RQf5RaOZi2vLlAT98BjY-pZGZrhSH1h1MXTn2mxhLT2qHUiw3w_aB0tL4Qe8FIBNBOdSxo"/>
+                <div class="product-overlay">
+                  <button class="add-to-cart">Añadir al Carrito</button>
+                </div>
+              </div>
+              <div class="product-info">
+                <h4 class="product-name">Juguete Interactivo para Gatos</h4>
+                <p class="product-description">Con Plumas y Cascabel</p>
+                <p class="product-price">$12.50</p>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image-container">
+                <img alt="Jaula para aves" class="product-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu2tGAqdKCZ-JoxcPK1_w50MiAp_NWSMVXmNvbrT1kDsnJWBYylzldKPAUFhkRyPXvB_gVaXsP7JXaadLflJpcgSBycen4Fj-sQB22vPu0IY5o20c6IskvTGcxuFxrQOHv7mfRrYkTCZ6C2OU7kN3eE9__l6K2joxO9VcpNZnTNzt50oJg19Igdzj9lgGvza-EzhE9PqzTR4-hG2CecQFG_cHJqz73nOLCERNl_7_J53IdLMafxa5DTw_qyO_bNVqZixZOiO7JxQk"/>
+                <div class="product-overlay">
+                  <button class="add-to-cart">Añadir al Carrito</button>
+                </div>
+              </div>
+              <div class="product-info">
+                <h4 class="product-name">Jaula Espaciosa para Aves</h4>
+                <p class="product-description">Con Perchas y Columpios</p>
+                <p class="product-price">$89.90</p>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image-container">
+                <img alt="Collar para perros" class="product-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9zMSpH1lc9rwJLOhb-4gRnPdJ-Z8pqledAusr4hedSil72kkpcm9F6LMRLTTkm5j9SdFomOcSPc1Yr3e_qUHRQZzDtZ3qbfLp6NEm3bLbzx0u1LfuzwNP3nt4K-vYmdhrcAZ7DgTYeYNBxE1E6znTs1lvVdMUePTVb9zjBkQJES-3AeTT4iZMuZgBvklE3N9NnUiYAt8cJj1eNN7nhZppveoyLhxbgvaBs2rgRTyfrqcOaGylguhHqui6TFpNPOr34wQsGEDhD6w"/>
+                <div class="product-overlay">
+                  <button class="add-to-cart">Añadir al Carrito</button>
+                </div>
+              </div>
+              <div class="product-info">
+                <h4 class="product-name">Collar Ajustable para Perros</h4>
+                <p class="product-description">Talla M, Color Azul</p>
+                <p class="product-price">$9.99</p>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image-container">
+                <img alt="Rascador para gatos" class="product-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxB6aY8pzpd1sLwlo7uEQgehRtKCEUXz3PlpKzz-ROxwFXPZY4X5LJtHOwYxUqNnwhQjbv1qR_6wdXwxV72YOdEYMCWT7YGEUmc8kpLoTA2pprzsvnrvhpf-eIH2y-XZ1U9blc6rEs9e2H2vXa7GaMpM-vQfRRJkGBEIzkB2RFmB6InOLWa-TBsWy2gRAdQgkFzoQaYbQCxk8p_dzIpCkZZv6JZU_PYRnY-V_xkIlEyT4u2AHjeMdyTcHkgvwi1I2dvOxOhQSFF3k"/>
+                <div class="product-overlay">
+                  <button class="add-to-cart">Añadir al Carrito</button>
+                </div>
+              </div>
+              <div class="product-info">
+                <h4 class="product-name">Rascador Resistente para Gatos</h4>
+                <p class="product-description">Con Hierba Gatera</p>
+                <p class="product-price">$35.00</p>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="product-image-container">
+                <img alt="Comedero automático" class="product-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJSRfITExVW-Bhj0kzXMIlgR27jL_-lOCli4MNVStqZi6MEeX1bqvWPhLi6xHvn7CxHrHdDVySwOwDz3t1X3ojAXKpdsut8Mbqx2RufncSyrDV01xmCZ4JX3IKWouHA6lFT235q_l_R7hZ5i8k2b7I_2F74mE5lz5CZguRQ0c4w5CkOPZNdpsPjdGJZOv0uen4h4mXPNvg-dQCXuL3gn-NhvEcGHc6fWina7KUQlD8n_F5nsOrzljqJtYQbHzJE2wck9BfS-1THSU"/>
+                <div class="product-overlay">
+                  <button class="add-to-cart">Añadir al Carrito</button>
+                </div>
+              </div>
+              <div class="product-info">
+                <h4 class="product-name">Comedero Automático</h4>
+                <p class="product-description">Con Temporizador</p>
+                <p class="product-price">$55.25</p>
+              </div>
+            </div>
+          </div>
+          <div class="pagination-container">
+            <nav class="pagination">
+              <a class="pagination-link pagination-prev" href="#">Anterior</a>
+              <a class="pagination-link pagination-active" href="#">1</a>
+              <a class="pagination-link" href="#">2</a>
+              <a class="pagination-link" href="#">3</a>
+              <a class="pagination-link pagination-next" href="#">Siguiente</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

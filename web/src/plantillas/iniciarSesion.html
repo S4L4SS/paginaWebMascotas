@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mundo Mascotas</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="iniciarSesion.css">
+</head>
+<body class="fondo-principal fuente-principal texto-principal">
+  <header class="encabezado">
+      <!-- Logo -->
+      <div class="logo-contenedor">
+        <h1 class="titulo-logo">Mundo Mascotas🐶</h1>
+      </div>
+
+      <!-- Botón hamburguesa (solo en pantallas pequeñas) -->
+      <button class="boton-hamburguesa" id="boton-menu-movil">
+        <span class="material-symbols-outlined text-3xl">menu</span>
+      </button>
+
+      
+      <!-- Menú de escritorio -->
+      <nav class="menu-escritorio">
+        <a class="enlace-menu" href="index.html">Inicio</a>
+        <a class="enlace-menu" href="productos.html">Productos</a>
+      </nav>
+
+      <!-- Botones -->
+      <div class="botones-escritorio">
+        <a href="carrito.html" style="text-decoration: none;">
+        <button class="boton-carrito">
+          <span class="material-symbols-outlined">shopping_cart</span>
+          <span class="texto-carrito">Carrito</span>
+        </button>
+        </a>
+        <button class="boton-sesion">
+          <span><a href="iniciarSesion.html" class="iniciar-sesion">Iniciar Sesión</a></span>
+        </button>
+      </div>
+    </header>
+
+
+
+    <!-- Menú móvil (oculto por defecto) -->
+    <div id="mobile-menu" class="menu-movil hidden">
+      <a class="enlace-menu" href="inicio.html">Inicio</a>
+      <a class="enlace-menu" href="productos.html">Productos</a>
+      <a href="carrito.html" style="text-decoration: none;">
+      <button class="boton-carrito-movil">
+        <span class="material-symbols-outlined">shopping_cart</span> Carrito
+      </button>
+      </a>
+      <button class="boton-sesion-movil">
+        <a href="iniciarSesion.html" class="iniciar-sesion">Iniciar Sesión</a>
+      </button>
+    </div>
+
+  <seccion class="seccion-principal contenedor">
+    <h1 class="titulo-seccion">Bienvenido a Mundo Mascotas</h1>
+    <p class="subtitulo-seccion">Inicia sesión o crea una cuenta para empezar</p>
+
+    <div class="contenedor-formularios">
+      <div class="botones-formulario">
+        <button id="mostrar-inicio-sesion" class="boton-formulario boton-formulario-activo">Iniciar Sesión</button>
+        <button id="mostrar-registro" class="boton-formulario">Registrarse</button>
+      </div>
+
+      <form id="formulario-inicio-sesion" class="formulario">
+        <div class="campo-formulario">
+          <label for="email-inicio">Correo electrónico</label>
+          <input type="email" id="email-inicio" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="contrasena-inicio">Contraseña</label>
+          <input type="password" id="contrasena-inicio" required>
+        </div>
+        <div class="opciones-formulario">
+          <label class="recordar">
+            <input type="checkbox"> Recordarme
+          </label>
+          <a href="#" class="enlace-olvidado">¿No recuerdo mi contraseña?</a>
+        </div>
+        <button type="submit" class="boton-enviar">Iniciar Sesión</button>
+      </form>
+
+      <formulario id="formulario-registro" class="formulario hidden">
+        <div class="campo-formulario">
+          <label for="nombre-registro">Nombre</label>
+          <input type="text" id="nomb
+System: re-registro" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="apellido-registro">Apellido</label>
+          <input type="text" id="apellido-registro" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="fecha-nacimiento">Fecha de nacimiento</label>
+          <input type="date" id="fecha-nacimiento" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="email-registro">Correo electrónico</label>
+          <input type="email" id="email-registro" required>
+        </div>
+        <div class="campo-formulario">
+          <label for="contrasena-registro">Contraseña</label>
+          <input type="password" id="contrasena-registro" required>
+        </div>
+        <div class="opciones-formulario">
+          <label class="terminos">
+            <input type="checkbox" required> Acepto los términos y condiciones
+          </label>
+        </div>
+        <button type="submit" class="boton-enviar">Registrarse</button>
+      </formulario>
+    </div>
+  </seccion>
+
+  <script src="iniciarSesion.js"></script>
+</body>
+</html>

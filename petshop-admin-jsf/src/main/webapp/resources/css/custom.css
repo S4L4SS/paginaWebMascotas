@@ -1,0 +1,80 @@
+/* Custom CSS para PetShop Admin JSF */
+
+/* Estilos para inputs de stock */
+.stock-input {
+    width: 50px !important;
+    text-align: center;
+    display: inline-block;
+}
+
+/* Mejorar tablas */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Badges de estado de stock */
+.badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+/* Botones de acción */
+.btn-group .btn {
+    margin-left: 5px;
+}
+
+/* Mensajes de alerta */
+.alert {
+    margin-bottom: 20px;
+}
+
+/* Paginación */
+.ui-paginator {
+    padding: 10px;
+    text-align: center;
+}
+
+/* Panel de búsqueda */
+.search-panel {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+/* Iconos */
+.fa, .glyphicon {
+    margin-right: 5px;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
+}
+
+/* Productos - Stock inputs */
+input[id*="stockInput"] {
+    width: 60px !important;
+    padding: 2px 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Loading spinner para AJAX */
+.ajax-loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0,0,0,.1);
+    border-radius: 50%;
+    border-top-color: #007bff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

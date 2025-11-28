@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mundo Mascotas🐶 - Carrito de Compras</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13a4ec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                        "foreground-light": "#111618",
+                        "foreground-dark": "#f6f7f8",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1b2a33",
+                        "subtle-light": "#617c89",
+                        "subtle-dark": "#a0b1b9",
+                        "border-light": "#dbe2e6",
+                        "border-dark": "#3c4d56"
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-foreground-light dark:text-foreground-dark">
+<div class="flex flex-col min-h-screen">
+<header class="bg-card-light dark:bg-card-dark border-b border-border-light dark:border-border-dark sticky top-0 z-10">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-4">
+<h1 class="text-xl font-bold">Mundo Mascotas🐶</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+
+</div>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex w-80 h-20 justify-between text-subtle-light dark:text-subtle-dark">
+        <button>
+        <h4><a href="productos.html">← Regresar al catálogo</a></h4>
+        </button>
+    </div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2">
+<h2 class="text-3xl font-bold mb-6">Carrito de Compras</h2>
+<div class="space-y-4">
+<div class="bg-card-light dark:bg-card-dark rounded-lg p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-20 h-20 bg-cover bg-center rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuATXyuoqkvt73ZZyLc42RuG495PH-0_9z2ry7_GwHy8Yj6nJ6fACKoMZV47fHACCQhfObX2_oIsBqQxsQAraCXt-NoIAibLQ_NVgKAYiOdNTJvpjtpYsENVbJdpBKEWpHBUiTTVXI-ucQWKdK0CAhTWCTvd7uWkoOk_X5J57YovQpwNDt2vCCvm-Xv8xLHqZJQ2Da7BqJI4EMRh4Lr3jGw_z_5RHweRo27vOBfAt3GGRoUDDamnS-8VudXfzmvd0fWU08DQxp4KSDA");'></div>
+<div>
+<h3 class="font-bold">Comida Premium para Perros</h3>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">S/30.00</p>
+<div class="flex items-center gap-2 mt-2">
+<button class="w-6 h-6 rounded-full border border-border-light dark:border-border-dark flex items-center justify-center text-subtle-light dark:text-subtle-dark hover:bg-background-light dark:hover:bg-background-dark">-</button>
+<span>2</span>
+<button class="w-6 h-6 rounded-full border border-border-light dark:border-border-dark flex items-center justify-center text-subtle-light dark:text-subtle-dark hover:bg-background-light dark:hover:bg-background-dark">+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<p class="font-bold">S/60.00</p>
+<button class="text-subtle-light dark:text-subtle-dark hover:text-red-500">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-lg p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-20 h-20 bg-cover bg-center rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAuqqozgPK0zt7M0Bz8lYv3gFc6Oup-D4xDQqN_1xgV1Q4mWBw04GN9zD3PlmSAJbtzoWVTwJMNNT5KbrBXuDtseI-K3PHzvJe-_U8XOcQ8Bhe67ji7cQQooY6S8AT1p0TJs3PUaXTaRc8uzmCx6rSid3OBTEFd11LPzJBNqJRG9gt0zIkvaSGrAgRRjekasTO-rd8ogMQGCosc-AUMMkKnzVjvRTgneb7Nv9Gv9bUmDme9TdwjwJ2PbMrS3FGexXGu5mUyQ1wwaJw");'></div>
+<div>
+<h3 class="font-bold">Juguete Interactivo para Gatos</h3>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">S/15.00</p>
+<div class="flex items-center gap-2 mt-2">
+<button class="w-6 h-6 rounded-full border border-border-light dark:border-border-dark flex items-center justify-center text-subtle-light dark:text-subtle-dark hover:bg-background-light dark:hover:bg-background-dark">-</button>
+<span>1</span>
+<button class="w-6 h-6 rounded-full border border-border-light dark:border-border-dark flex items-center justify-center text-subtle-light dark:text-subtle-dark hover:bg-background-light dark:hover:bg-background-dark">+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<p class="font-bold">S/15.00</p>
+<button class="text-subtle-light dark:text-subtle-dark hover:text-red-500">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</div>
+<div class="bg-card-light dark:bg-card-dark rounded-lg p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-20 h-20 bg-cover bg-center rounded-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBY_stdDRBs9UiYs2pi_OlpMBNTy5h4cl2OTVP8tXuz9Q-ks4pYRNeF8l9TN1MFndRng5z-8_jqTCdAwRVGCLRSxd7BA-aHetfIcr33Fiu9DVqXAnVPb5dBY9ULiJHzbqmYGHypsRJ19RgMZ1XFxDYPa64HMupBWHbu2u5FlcfLl8AcxIIk-x5YeY2ICCPZY2D7KzzyBwWf533fWDxUPVqlRmIK3Nprsg5BLox-wkMv9wVidh4NCSxeDtgAmsdReqP1W-Udz8yz2vg");'></div>
+<div>
+<h3 class="font-bold">Arena Sanitaria para Gatos</h3>
+<p class="text-sm text-subtle-light dark:text-subtle-dark">S/15.00</p>
+<div class="flex items-center gap-2 mt-2">
+<button class="w-6 h-6 rounded-full border border-border-light dark:border-border-dark flex items-center justify-center text-subtle-light dark:text-subtle-dark hover:bg-background-light dark:hover:bg-background-dark">-</button>
+<span>3</span>
+<button class="w-6 h-6 rounded-full border border-border-light dark:border-border-dark flex items-center justify-center text-subtle-light dark:text-subtle-dark hover:bg-background-light dark:hover:bg-background-dark">+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<p class="font-bold">S/45.00</p>
+<button class="text-subtle-light dark:text-subtle-dark hover:text-red-500">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-1">
+<div class="bg-card-light dark:bg-card-dark rounded-lg p-6 space-y-6 sticky top-24">
+<h3 class="text-xl font-bold">Resumen del Pedido</h3>
+<div class="space-y-2">
+<div class="flex justify-between text-subtle-light dark:text-subtle-dark">
+<span>Subtotal</span>
+<span>S/120.00</span>
+</div>
+<div class="flex justify-between text-subtle-light dark:text-subtle-dark">
+<span>Envío</span>
+<span>S/10.00</span>
+</div>
+<div class="flex justify-between font-bold text-lg border-t border-border-light dark:border-border-dark pt-2 mt-2">
+<span>Total</span>
+<span>S/130.00</span>
+</div>
+</div>
+<h3 class="text-xl font-bold pt-4">Método de Pago</h3>
+<div class="space-y-3">
+<label class="flex items-center gap-4 rounded-lg border border-border-light dark:border-border-dark p-3 has-[:checked]:border-primary has-[:checked]:bg-primary/10 dark:has-[:checked]:bg-primary/20 cursor-pointer">
+<input checked="" class="form-radio h-5 w-5 text-primary focus:ring-primary/50" name="payment-method" type="radio"/>
+<img alt="Visa" class="h-6" src="img/visa.png"/>
+<span class="font-medium">Tarjeta</span>
+</label>
+<label class="flex items-center gap-4 rounded-lg border border-border-light dark:border-border-dark p-3 has-[:checked]:border-primary has-[:checked]:bg-primary/10 dark:has-[:checked]:bg-primary/20 cursor-pointer">
+<input class="form-radio h-5 w-5 text-primary focus:ring-primary/50" name="payment-method" type="radio"/>
+<img alt="Yape" class="h-6" src="img/yape-37283.png"/>
+<span class="font-medium">Yape</span>
+</label>
+<label class="flex items-center gap-4 rounded-lg border border-border-light dark:border-border-dark p-3 has-[:checked]:border-primary has-[:checked]:bg-primary/10 dark:has-[:checked]:bg-primary/20 cursor-pointer">
+<input class="form-radio h-5 w-5 text-primary focus:ring-primary/50" name="payment-method" type="radio"/>
+<img alt="Plin" class="h-6" src="img/plin-interbank-4391.png"/>
+<span class="font-medium">Plin</span>
+</label>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium mb-1" for="card-number">Número de Tarjeta</label>
+<input class="form-input w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:ring-primary focus:border-primary" id="card-number" placeholder="**** **** **** ****" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium mb-1" for="expiry-date">Fecha de Caducidad</label>
+<input class="form-input w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:ring-primary focus:border-primary" id="expiry-date" placeholder="MM/AA" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium mb-1" for="cvv">CVV</label>
+<input class="form-input w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:ring-primary focus:border-primary" id="cvv" placeholder="123" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium mb-1" for="card-holder">Nombre del Titular</label>
+<input class="form-input w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:ring-primary focus:border-primary" id="card-holder" placeholder="Nombre como aparece en la tarjeta" type="text"/>
+</div>
+</div>
+<div class="space-y-3 pt-4">
+<button class="w-full h-12 rounded-lg bg-primary text-white font-bold text-base hover:bg-primary/90 transition-colors">
+                                Realizar Compra
+                            </button>
+<button class="w-full h-12 rounded-lg bg-background-light dark:bg-card-dark border border-border-light dark:border-border-dark font-bold text-base hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors">
+                                Cancelar Compra
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+    <title>PetShop Admin - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="login-container">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="font-size: 48px; margin: 0;">🐾</h1>
+            <h2>PetShop Admin</h2>
+            <p style="color: #666;">Sistema de gestión con JSF</p>
+        </div>
+        
+        <h:form id="loginForm">
+            <b:inputText placeholder="Usuario" 
+                        icon="user"
+                        required="true"
+                        style="margin-bottom: 15px;"/>
+            
+            <b:inputSecret placeholder="Contraseña" 
+                          icon="lock"
+                          required="true"
+                          style="margin-bottom: 20px;"/>
+            
+            <h:link outcome="/dashboard" 
+                   styleClass="btn btn-primary btn-lg btn-block"
+                   value="🔐 Iniciar Sesión"
+                   style="margin-bottom: 10px; text-align: center; display: block; padding: 10px;"/>
+            
+            <h:link outcome="/dashboard" 
+                   styleClass="btn btn-success btn-sm btn-block"
+                   value="Ir a Dashboard (Demo)"
+                   style="text-align: center; display: block;"/>
+        </h:form>
+        
+        <div style="text-align: center; margin-top: 20px; color: #999; font-size: 12px;">
+            <p>© 2024 PetShop Admin - JSF + BootFaces</p>
+        </div>
+    </div>
+</h:body>
+</html>

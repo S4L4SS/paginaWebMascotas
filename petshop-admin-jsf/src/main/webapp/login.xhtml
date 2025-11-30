@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+    <title>PetShop Admin - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo-icon {
+            font-size: 48px;
+            margin: 0;
+        }
+        .login-title {
+            margin: 10px 0 5px 0;
+            color: #333;
+        }
+        .login-subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .btn-login {
+            margin-top: 20px;
+            width: 100%;
+        }
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            color: #999;
+            font-size: 12px;
+        }
+        .alert-container {
+            margin-bottom: 20px;
+        }
+        .test-credentials {
+            background-color: #f8f9fa;
+            border-left: 3px solid #667eea;
+            padding: 10px;
+            margin-top: 15px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+        .test-credentials strong {
+            color: #667eea;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="login-container">
+        <div class="logo-container">
+            <h1 class="logo-icon">🐾</h1>
+            <h2 class="login-title">PetShop Admin</h2>
+            <p class="login-subtitle">Sistema de gestión con JSF</p>
+        </div>
+        
+        <!-- Mensajes de validación y errores -->
+        <div class="alert-container">
+            <b:messages/>
+        </div>
+        
+        <h:form id="loginForm">
+            <div class="form-group">
+                <b:inputText placeholder="Usuario" 
+                            value="#{loginBean.username}"
+                            icon="user"
+                            required="true"
+                            requiredMessage="Por favor ingrese su usuario"
+                            fieldId="username"/>
+            </div>
+            
+            <div class="form-group">
+                <b:inputSecret placeholder="Contraseña" 
+                              value="#{loginBean.password}"
+                              icon="lock"
+                              required="true"
+                              requiredMessage="Por favor ingrese su contraseña"
+                              fieldId="password"/>
+            </div>
+            
+            <b:commandButton value="🔐 Iniciar Sesión" 
+                           action="#{loginBean.login}"
+                           look="primary"
+                           size="lg"
+                           styleClass="btn-login"
+                           update="loginForm"/>
+            
+            <!-- Información de credenciales de prueba -->
+            <div class="test-credentials">
+                <strong>🔑 Credenciales de prueba:</strong><br/>
+                Usuario: <code>admin1</code><br/>
+                Contraseña: <code>admin123</code>
+            </div>
+        </h:form>
+        
+        <div class="footer-text">
+            <p>© 2024 PetShop Admin - JSF + BootFaces</p>
+        </div>
+    </div>
+</h:body>
+</html>

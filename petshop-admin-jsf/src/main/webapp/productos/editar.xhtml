@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">Editar Producto - PetShop Admin</ui:define>
+    
+    <ui:define name="content">
+        <!-- Cargar producto si viene desde URL -->
+        <f:metadata>
+            <f:viewAction action="#{productoBean.cargarProductoParaEdicion()}"/>
+        </f:metadata>
+        
+        <h:form id="editarProductoForm" enctype="multipart/form-data">
+            <!-- Header -->
+            <b:row>
+                <b:column>
+                    <h1>
+                        <b:iconAwesome name="edit"/> Editar Producto
+                    </h1>
+                    <hr/>
+                </b:column>
+            </b:row>
+            
+            <!-- Formulario -->
+            <b:row>
+                <b:column col-md="8" offset="2">
+                    <b:panel title="Datos del Producto" look="warning">
+                        <b:row>
+                            <b:column col-md="12">
+                                <b:inputText label="ID del Producto" 
+                                           value="#{productoBean.productoSeleccionado.idProducto}"
+                                           disabled="true"/>
+                            </b:column>
+                        </b:row>
+                        
+                        <b:row>
+                            <b:column col-md="12">
+                                <b:inputText label="Nombre del Producto" 
+                                           value="#{productoBean.productoSeleccionado.nombre}"
+                                           required="true"
+                                           requiredMessage="El nombre es obligatorio">
+                                    <f:validator validatorId="javax.faces.Length" minimum="3" maximum="100"/>
+                                </b:inputText>
+                            </b:column>
+                        </b:row>
+                        
+                        <b:row>
+                            <b:column col-md="12">
+                                <b:inputTextarea label="Descripción" 
+                                               value="#{productoBean.productoSeleccionado.descripcion}"
+                                               rows="4"/>
+                            </b:column>
+                        </b:row>
+                        
+                        <b:row>
+                            <b:column col-md="6">
+                                <b:inputText label="Precio (S/.)" 
+                                           value="#{productoBean.productoSeleccionado.precio}"
+                                           required="true">
+                                    <f:convertNumber type="number" minFractionDigits="2" maxFractionDigits="2"/>
+                                </b:inputText>
+                            </b:column>
+                            
+                            <b:column col-md="6">
+                                <b:inputText label="Stock" 
+                                           value="#{productoBean.productoSeleccionado.stock}"
+                                           required="true">
+                                    <f:convertNumber integerOnly="true"/>
+                                </b:inputText>
+                            </b:column>
+                        </b:row>
+                        
+                        <b:row>
+                            <b:column col-md="12">
+                                <b:inputText label="Categoría" 
+                                           value="#{productoBean.productoSeleccionado.categoria}"
+                                           placeholder="Ej: Alimento, Juguetes, Accesorios"/>
+                            </b:column>
+                        </b:row>
+                        
+                        <b:row>
+                            <b:column col-md="12">
+                                <h:panelGroup>
+                                    <label class="control-label">Imagen del Producto</label>
+                                    <p:fileUpload value="#{productoBean.archivoSubido}" 
+                                                mode="simple" 
+                                                skinSimple="true"
+                                                label="Seleccionar Imagen"
+                                                accept="image/*"
+                                                style="margin-top: 5px; margin-bottom: 10px;"/>
+                                    
+                                    <!-- Previsualización de imagen actual -->
+                                    <h:panelGroup rendered="#{not empty productoBean.productoSeleccionado.imagen}">
+                                        <small class="form-text text-muted">Imagen actual:</small>
+                                        <h:graphicImage value="/#{productoBean.productoSeleccionado.imagen}" 
+                                                      style="max-width: 200px; display: block; margin: 10px 0;"
+                                                      alt="Imagen del producto"
+                                                      onerror="this.src='/resources/images/no-image.svg';"/>
+                                    </h:panelGroup>
+                                    
+                                    <small class="form-text text-muted">Ruta de imagen: #{productoBean.productoSeleccionado.imagen}</small>
+                                </h:panelGroup>
+                            </b:column>
+                        </b:row>
+                        
+                        <hr/>
+                        
+                        <b:row>
+                            <b:column col-md="4">
+                                <b:commandButton value="Actualizar" 
+                                               action="#{productoBean.actualizarProductoConImagen()}"
+                                               look="success" 
+                                               icon="save"
+                                               size="lg"
+                                               style="width: 100%;"/>
+                            </b:column>
+                            <b:column col-md="4">
+                                <b:commandButton value="Cancelar" 
+                                               action="#{productoBean.cancelarEdicion()}"
+                                               look="default" 
+                                               icon="times"
+                                               size="lg"
+                                               immediate="true"
+                                               style="width: 100%;"/>
+                            </b:column>
+                            <b:column col-md="4">
+                                <b:commandButton value="Eliminar" 
+                                               action="#{productoBean.eliminarProducto(productoBean.productoSeleccionado)}"
+                                               outcome="/productos/lista.xhtml"
+                                               look="danger" 
+                                               icon="trash"
+                                               size="lg"
+                                               onclick="return confirm('¿Está seguro de eliminar este producto?');"
+                                               style="width: 100%;"/>
+                            </b:column>
+                        </b:row>
+                    </b:panel>
+                </b:column>
+            </b:row>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

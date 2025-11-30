@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    
+<h:head>
+    <title>
+        <ui:insert name="title">PetShop Admin</ui:insert>
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="custom.css"/>
+</h:head>
+
+<h:body>
+    <!-- Navbar -->
+    <b:navBar brand="🐾 PetShop Admin" brandHref="#{request.contextPath}/index.xhtml" 
+              inverse="true" fixed="top">
+        <b:navbarLinks>
+            <b:navLink value="Dashboard" href="#{request.contextPath}/dashboard.xhtml" 
+                      icon="dashboard"/>
+            <b:navLink value="Productos" href="#{request.contextPath}/productos/lista.xhtml" 
+                      icon="shopping-cart"/>
+            <b:dropMenu value="Administración" icon="cog">
+                <b:navLink value="Nuevo Producto" 
+                          href="#{request.contextPath}/productos/nuevo.xhtml" 
+                          icon="plus"/>
+                <b:navLink value="Reportes" icon="bar-chart"/>
+                <b:navLink/>
+                <b:navLink value="Configuración" icon="wrench"/>
+            </b:dropMenu>
+        </b:navbarLinks>
+        <b:navbarLinks pull="right">
+            <b:dropMenu value="#{loginBean.nombreUsuario}" icon="user">
+                <b:navLink value="Mi Perfil" icon="user"/>
+                <b:navLink value="Configuración" icon="cog"/>
+                <b:navLink/>
+                <h:form style="margin: 0; padding: 0;">
+                    <b:commandButton value="Cerrar Sesión" 
+                                   action="#{loginBean.logout}" 
+                                   icon="sign-out"
+                                   look="link"
+                                   style="text-align: left; width: 100%; padding: 3px 20px;"/>
+                </h:form>
+            </b:dropMenu>
+        </b:navbarLinks>
+    </b:navBar>
+    
+    <!-- Main Content -->
+    <b:container fluid="true" style="margin-top: 70px; padding: 20px;">
+        <!-- Messages -->
+        <b:row>
+            <b:column>
+                <b:messages/>
+            </b:column>
+        </b:row>
+        
+        <!-- Page Content -->
+        <ui:insert name="content">
+            <!-- El contenido específico de cada página se insertará aquí -->
+        </ui:insert>
+    </b:container>
+    
+    <!-- Footer -->
+    <footer style="margin-top: 50px; padding: 20px; background-color: #f8f9fa; text-align: center;">
+        <p>
+            <small>
+                © 2024 PetShop Admin - Sistema de gestión con JSF + BootFaces
+            </small>
+        </p>
+    </footer>
+    
+    <!-- jQuery viene incluido con BootFaces desde CDN -->
+    <!-- <h:outputScript library="js" name="jquery-3.6.0.min.js"/> -->
+    <h:outputScript library="js" name="custom.js"/>
+</h:body>
+</html>

@@ -1,111 +1,167 @@
-# Guía de Configuración de Base de Datos - Tienda de Mascotas
+# 🐾 Base de Datos MascotasDB - Guía de Instalación
 
-Este proyecto incluye tres archivos SQL organizados para diferentes escenarios de configuración.
+## 📋 Descripción
 
-## 📂 **Archivos Disponibles**
+Este es el **archivo SQL único y completo** para instalar toda la base de datos del sistema de tienda de mascotas. Incluye:
 
-### 1. `database_complete.sql` 
-**Configuración completa desde cero**
-- Crea la base de datos completa con todas las tablas
-- Incluye estructura optimizada con todas las columnas necesarias
-- Perfecto para instalaciones nuevas
+- ✅ Estructura completa de tablas
+- ✅ Usuarios de prueba (administradores y clientes)
+- ✅ Productos de muestra
+- ✅ Compras históricas
+- ✅ Métricas del sistema
 
-**Úsalo cuando:**
-- Empezar un proyecto desde cero
-- Quieres una base de datos limpia y completa
-- Es tu primera instalación
+## 🚀 Instalación Rápida
 
-### 2. `database_updates.sql`
-**Actualización de base de datos existente**
-- Añade nuevas columnas a tablas existentes
-- Crea tablas de métricas y compras
-- Respeta datos existentes
+### Opción 1: Desde MySQL Workbench
+1. Abre MySQL Workbench
+2. Conecta a tu servidor MySQL
+3. File → Open SQL Script → Selecciona `mascotasdb_completo.sql`
+4. Click en el ícono ⚡ (Execute) o presiona `Ctrl+Shift+Enter`
+5. ¡Listo! La base de datos está creada
 
-**Úsalo cuando:**
-- Ya tienes la base de datos básica (usuario y producto)
-- Quieres añadir el sistema de reportes
-- No quieres perder datos existentes
+### Opción 2: Desde la línea de comandos
+```bash
+mysql -u root -p < mascotasdb_completo.sql
+```
+Ingresa tu contraseña de MySQL cuando te la pida.
 
-### 3. `database_sample_data.sql`
-**Datos de prueba y ejemplos**
-- Inserta productos, usuarios, compras y métricas de ejemplo
-- Datos distribuidos en diferentes fechas para demostrar reportes
-- Perfecto para testing y demostraciones
-
-**Úsalo cuando:**
-- Quieres ver el sistema funcionando inmediatamente
-- Necesitas datos para probar reportes
-- Quieres hacer demostraciones
-
-## 🚀 **Instrucciones de Instalación**
-
-### **Opción A: Instalación Completa Nueva**
-```sql
--- 1. Ejecutar configuración completa
-source /ruta/database_complete.sql;
-
--- 2. Añadir datos de prueba (opcional)
-source /ruta/database_sample_data.sql;
+### Opción 3: Comando directo
+```bash
+mysql -u root -p -e "source C:/paginaWebMascotas/mascotasdb_completo.sql"
 ```
 
-### **Opción B: Actualizar Base de Datos Existente**
-```sql
--- 1. Actualizar estructura existente
-source /ruta/database_updates.sql;
+## 📊 Estructura de la Base de Datos
 
--- 2. Añadir datos de prueba (opcional)
-source /ruta/database_sample_data.sql;
+### Tablas creadas:
+1. **usuario** - Usuarios del sistema (admins y clientes)
+2. **producto** - Catálogo de productos
+3. **metricas** - Métricas y reportes del sistema
+4. **compras** - Historial de transacciones
+
+### Relaciones:
+- `compras.idUsuario` → `usuario.idUsuario`
+- `compras.idProducto` → `producto.idProducto`
+
+## 🔐 Credenciales de Acceso
+
+### Administradores:
+| Usuario | Contraseña | Nombre |
+|---------|-----------|---------|
+| `admin1` | `admin123` | Administrador Sistema |
+| `admin2` | `admin123` | Admin Intal |
+| `sofia` | `pastelote777` | Mariana Sofia |
+
+### Clientes:
+| Usuario | Contraseña |
+|---------|-----------|
+| `cliente1` | `cliente123` |
+| `miguel` | `miguel123` |
+| `juan` | `juan123` |
+| `rodrigo` | `rodrigo123` |
+
+## 📦 Datos Incluidos
+
+- **7 usuarios** (3 admins + 4 clientes)
+- **15 productos** en 5 categorías:
+  - Alimento
+  - Juguetes
+  - Accesorios
+  - Higiene
+  - Refugio
+- **19 compras** distribuidas en el tiempo (hoy, ayer, semana, mes)
+- **Métricas** correspondientes a todas las compras
+
+## 🔄 Reinstalación
+
+Si necesitas reinstalar la base de datos desde cero:
+
+1. El script **elimina automáticamente** las tablas existentes
+2. Crea las tablas nuevas
+3. Inserta todos los datos
+
+**Advertencia:** ⚠️ Esto eliminará TODOS los datos existentes en las tablas.
+
+## 🧪 Verificación
+
+Después de ejecutar el script, verás un resumen como este:
+
+```
+✅ Base de datos creada exitosamente
+📊 RESUMEN DE DATOS INSERTADOS
+================================
+👥 Usuarios: 7
+   - Administradores: 3
+   - Clientes: 4
+
+📦 Productos: 15
+   - En stock: 15
+   - Stock total: 548
+
+🛒 Compras registradas: 19
+   - Total vendido: $XXX.XX
+
+📈 Métricas registradas: XX
 ```
 
-## 📊 **Tablas Incluidas**
+## 🎯 Para qué sirve este archivo
 
-| Tabla | Descripción | Campos Principales |
-|-------|-------------|-------------------|
-| `usuario` | Información de usuarios y admins | id, usuario, correo, rol, fotoPerfil |
-| `producto` | Catálogo de productos | id, nombre, precio, stock, categoria |
-| `metricas` | Estadísticas del sistema | tipo, entidad, valor, fechaCreacion |
-| `compras` | Registro de transacciones | usuario, producto, cantidad, total |
+Este SQL unificado es perfecto para:
 
-## 🔧 **Verificación Post-Instalación**
+- ✅ **Instalar el sistema en un nuevo dispositivo**
+- ✅ **Resetear la base de datos a estado limpio**
+- ✅ **Compartir el proyecto con otros desarrolladores**
+- ✅ **Hacer pruebas con datos consistentes**
+- ✅ **Demostración del sistema**
 
-Después de ejecutar los scripts, verifica que todo esté correcto:
+## 🔧 Configuración del Sistema
 
-```sql
--- Verificar tablas creadas
-SHOW TABLES;
-
--- Verificar datos de ejemplo
-SELECT COUNT(*) as productos FROM producto;
-SELECT COUNT(*) as usuarios FROM usuario;
-SELECT COUNT(*) as metricas FROM metricas;
-SELECT COUNT(*) as compras FROM compras;
+### Para la aplicación Next.js (Node.js + Express):
+Asegúrate de tener en `backend/config/db.js`:
+```javascript
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'tu_password',
+  database: 'mascotasdb'
+});
 ```
 
-## 📈 **Funcionalidades del Sistema de Reportes**
+### Para la aplicación JSF (Java):
+Asegúrate de tener en `src/main/java/com/petshop/config/DBConnection.java`:
+```java
+String url = "jdbc:mysql://localhost:3306/mascotasdb";
+String user = "root";
+String password = "tu_password";
+```
 
-Con estos datos podrás usar:
-- ✅ Métricas de ventas por día/semana/mes
-- ✅ Productos más vendidos
-- ✅ Estadísticas de usuarios
-- ✅ Generación de reportes PDF
-- ✅ Gráficas interactivas
+## 📝 Notas Importantes
 
-## 🆘 **Solución de Problemas**
+- La base de datos se llama `mascotasdb`
+- Charset: `utf8mb4_unicode_ci`
+- Motor: `InnoDB`
+- Todas las tablas tienen claves primarias auto-incrementales
+- Las relaciones tienen `ON DELETE CASCADE` para mantener integridad
 
-**Error de columna no existe:**
-- Ejecuta `database_updates.sql` para añadir columnas faltantes
+## 🆘 Solución de Problemas
 
-**Datos duplicados:**
-- Los scripts usan `INSERT IGNORE` para evitar duplicados
+### Error: "Database already exists"
+- El script incluye `CREATE DATABASE IF NOT EXISTS`, no hay problema
 
-**Tablas no encontradas:**
-- Ejecuta `database_complete.sql` para crear estructura completa
+### Error: "Access denied"
+- Verifica que tu usuario MySQL tenga permisos de CREATE DATABASE
 
-## 🎯 **Próximos Pasos**
+### Error en fechas
+- Todas las fechas usan funciones como `NOW()` y `DATE_SUB()`, se ajustan automáticamente
 
-1. Ejecuta los scripts SQL apropiados
-2. Reinicia el servidor backend: `node app.js`
-3. Refresca la página del admin
-4. Ve a la pestaña "Reportes" para ver las estadísticas
+## 📞 Soporte
 
-¡Tu sistema de reportes estará listo para usar! 🎉
+Si encuentras algún problema con la instalación:
+1. Verifica que MySQL esté corriendo
+2. Verifica tus credenciales de acceso
+3. Revisa que no haya otros procesos usando la base de datos
+
+---
+
+**Versión:** 1.0.0  
+**Fecha:** 29 de noviembre de 2025  
+**Compatible con:** MySQL 5.7+, MySQL 8.0+, MariaDB 10.3+

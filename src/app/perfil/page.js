@@ -99,6 +99,11 @@ const EditarPerfil = () => {
         localStorage.setItem('usuario', JSON.stringify(result.user));
         setMessage('Perfil actualizado exitosamente');
         
+        // Disparar evento personalizado para actualizar el navbar
+        window.dispatchEvent(new CustomEvent('userUpdated', { 
+          detail: result.user 
+        }));
+        
         // Opcional: redirigir después de un momento
         setTimeout(() => {
           router.push('/');

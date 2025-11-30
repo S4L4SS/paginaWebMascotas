@@ -9,13 +9,19 @@ const comprasRouter = require('./routes/comprasRoutes');
 
 const app = express();
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8080'],
   credentials: true
 }));
 app.use(bodyParser.json());
 
-// Servir archivos estáticos (fotos de perfil)
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Carpeta compartida de uploads (usada por ambos JSF y React)
+const sharedUploadsPath = path.join(__dirname, '../petshop-admin-jsf/src/main/webapp/uploads');
+
+// Servir archivos estáticos desde la carpeta compartida
+app.use('/uploads', express.static(sharedUploadsPath));
+
+// También servir desde la carpeta local del backend (para compatibilidad)
+app.use('/uploads-local', express.static(path.join(__dirname, 'uploads')));
 
 // Servir archivo de prueba
 app.get('/test', (req, res) => {

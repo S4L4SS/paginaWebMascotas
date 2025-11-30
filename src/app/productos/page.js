@@ -320,9 +320,9 @@ export default function ProductosPage() {
               <div key={producto.idProducto} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
                 {/* Imagen del producto */}
                 <div className="aspect-w-1 aspect-h-1">
-                  {producto.foto ? (
+                  {producto.imagen ? (
                     <img
-                      src={producto.foto}
+                      src={`http://localhost:4000/${producto.imagen}`}
                       alt={producto.nombre}
                       className="w-full h-48 object-cover"
                     />

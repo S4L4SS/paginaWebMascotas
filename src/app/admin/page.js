@@ -14,6 +14,8 @@ export default function AdminPage() {
   const [editData, setEditData] = useState({ nombre: '', descripcion: '', precio: '', stock: '' });
   const [mostrarForm, setMostrarForm] = useState(false);
   const [nuevo, setNuevo] = useState({ nombre: '', descripcion: '', precio: '', stock: '' });
+  const [imagenNueva, setImagenNueva] = useState(null);
+  const [imagenEdit, setImagenEdit] = useState(null);
   const [usuario, setUsuario] = useState(null);
 
   // Verificar autenticación y cargar datos al inicializar
@@ -58,21 +60,39 @@ export default function AdminPage() {
     setNuevo({ ...nuevo, [e.target.name]: e.target.value });
   };
 
+  const handleImagenChange = e => {
+    setImagenNueva(e.target.files[0]);
+  };
+
   const handleEditChange = e => {
     setEditData({ ...editData, [e.target.name]: e.target.value });
   };
 
+  const handleImagenEditChange = e => {
+    setImagenEdit(e.target.files[0]);
+  };
+
   const handleAdd = async e => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append('nombre', nuevo.nombre);
+    formData.append('descripcion', nuevo.descripcion);
+    formData.append('precio', nuevo.precio);
+    formData.append('stock', nuevo.stock);
+    if (imagenNueva) {
+      formData.append('imagen', imagenNueva);
+    }
+
     const res = await fetch('http://localhost:4000/api/productos', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(nuevo)
+      body: formData
     });
     if (res.ok) {
-      const prod = await res.json();
-      setProductos([...productos, { ...nuevo, idProducto: prod.id }]);
+      const resProductos = await fetch('http://localhost:4000/api/productos');
+      const productosActualizados = await resProductos.json();
+      setProductos(productosActualizados);
       setNuevo({ nombre: '', descripcion: '', precio: '', stock: '' });
+      setImagenNueva(null);
       setMostrarForm(false);
     }
   };
@@ -89,17 +109,26 @@ export default function AdminPage() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append('nombre', editData.nombre);
+    formData.append('descripcion', editData.descripcion);
+    formData.append('precio', editData.precio);
+    formData.append('stock', editData.stock);
+    if (imagenEdit) {
+      formData.append('imagen', imagenEdit);
+    }
+
     const res = await fetch(`http://localhost:4000/api/productos/${editando}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(editData)
+      body: formData
     });
     if (res.ok) {
-      setProductos(productos.map(p =>
-        p.idProducto === editando ? { ...p, ...editData } : p
-      ));
+      const resProductos = await fetch('http://localhost:4000/api/productos');
+      const productosActualizados = await resProductos.json();
+      setProductos(productosActualizados);
       setEditando(null);
       setEditData({ nombre: '', descripcion: '', precio: '', stock: '' });
+      setImagenEdit(null);
     }
   };
 
@@ -318,6 +347,17 @@ export default function AdminPage() {
                       required
                     />
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Imagen del Producto
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImagenChange}
+                      className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-gray-700 dark:file:text-gray-300"
+                    />
+                  </div>
                   <div className="flex justify-end space-x-3">
                     <button
                       type="button"
@@ -479,6 +519,17 @@ export default function AdminPage() {
                           onChange={handleEditChange}
                           className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                           required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                          Cambiar Imagen (opcional)
+                        </label>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImagenEditChange}
+                          className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-gray-700 dark:file:text-gray-300"
                         />
                       </div>
                       <div className="flex justify-end space-x-3 pt-4">

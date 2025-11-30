@@ -106,7 +106,11 @@ router.post('/login', (req, res) => {
           idUsuario: user.idUsuario,
           usuario: user.usuario,
           correo: user.correo,
-          rol: user.rol
+          rol: user.rol,
+          fotoPerfil: user.fotoPerfil || null,
+          nombre: user.nombre || '',
+          apellido: user.apellido || '',
+          fechaNacimiento: user.fechaNacimiento || ''
         }
       });
     }
@@ -229,6 +233,32 @@ router.put('/:id/rol', (req, res) => {
     (err, result) => {
       if (err) return res.status(500).json({ error: 'Error al actualizar rol' });
       res.json({ mensaje: 'Rol actualizado' });
+    }
+  );
+});
+
+// Endpoint para obtener usuario por ID
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  
+  console.log(`[GET USER] Obteniendo datos del usuario ID: ${id}`);
+  
+  connection.query(
+    'SELECT idUsuario, usuario, correo, rol, fotoPerfil, nombre, apellido, fechaNacimiento FROM usuario WHERE idUsuario = ?',
+    [id],
+    (err, results) => {
+      if (err) {
+        console.log(`[GET USER] Error en BD:`, err);
+        return res.status(500).json({ error: 'Error al obtener usuario' });
+      }
+      
+      if (results.length === 0) {
+        console.log(`[GET USER] Usuario no encontrado ID: ${id}`);
+        return res.status(404).json({ error: 'Usuario no encontrado' });
+      }
+      
+      console.log(`[GET USER] Usuario encontrado: ${results[0].usuario}`);
+      res.json(results[0]);
     }
   );
 });

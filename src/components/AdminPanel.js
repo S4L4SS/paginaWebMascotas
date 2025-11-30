@@ -2,13 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import ReportesAdmin from './ReportesAdmin';
 
-// Componente para la gestión de productos
+// Componente para la gestión de productos - ACTUALIZADO 30/11/2025
 function ProductosAdmin() {
   const [productos, setProductos] = useState([]);
   const [nuevo, setNuevo] = useState({ nombre: '', descripcion: '', precio: '', stock: '' });
+  const [imagenNueva, setImagenNueva] = useState(null);
   const [mostrarForm, setMostrarForm] = useState(false);
   const [editando, setEditando] = useState(null);
   const [editData, setEditData] = useState({ nombre: '', descripcion: '', precio: '', stock: '' });
+  const [imagenEdit, setImagenEdit] = useState(null);
 
   // Obtener productos al cargar
   React.useEffect(() => {
@@ -21,21 +23,41 @@ function ProductosAdmin() {
     setNuevo({ ...nuevo, [e.target.name]: e.target.value });
   };
 
+  const handleImagenChange = e => {
+    setImagenNueva(e.target.files[0]);
+  };
+
   const handleEditChange = e => {
     setEditData({ ...editData, [e.target.name]: e.target.value });
   };
 
+  const handleImagenEditChange = e => {
+    setImagenEdit(e.target.files[0]);
+  };
+
   const handleAdd = async e => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append('nombre', nuevo.nombre);
+    formData.append('descripcion', nuevo.descripcion);
+    formData.append('precio', nuevo.precio);
+    formData.append('stock', nuevo.stock);
+    if (imagenNueva) {
+      formData.append('imagen', imagenNueva);
+    }
+
     const res = await fetch('http://localhost:4000/api/productos', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(nuevo)
+      body: formData
     });
     if (res.ok) {
       const prod = await res.json();
-      setProductos([...productos, { ...nuevo, idProducto: prod.id }]);
+      // Recargar productos para obtener la imagen
+      const resProductos = await fetch('http://localhost:4000/api/productos');
+      const productosActualizados = await resProductos.json();
+      setProductos(productosActualizados);
       setNuevo({ nombre: '', descripcion: '', precio: '', stock: '' });
+      setImagenNueva(null);
       setMostrarForm(false);
     }
   };
@@ -48,21 +70,32 @@ function ProductosAdmin() {
       precio: producto.precio,
       stock: producto.stock
     });
+    setImagenEdit(null);
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append('nombre', editData.nombre);
+    formData.append('descripcion', editData.descripcion);
+    formData.append('precio', editData.precio);
+    formData.append('stock', editData.stock);
+    if (imagenEdit) {
+      formData.append('imagen', imagenEdit);
+    }
+
     const res = await fetch(`http://localhost:4000/api/productos/${editando}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(editData)
+      body: formData
     });
     if (res.ok) {
-      setProductos(productos.map(p =>
-        p.idProducto === editando ? { ...p, ...editData } : p
-      ));
+      // Recargar productos para obtener la imagen actualizada
+      const resProductos = await fetch('http://localhost:4000/api/productos');
+      const productosActualizados = await resProductos.json();
+      setProductos(productosActualizados);
       setEditando(null);
       setEditData({ nombre: '', descripcion: '', precio: '', stock: '' });
+      setImagenEdit(null);
     }
   };
 
@@ -119,6 +152,15 @@ function ProductosAdmin() {
             onChange={handleChange}
             required
           />
+          <div className="mb-2">
+            <label className="block mb-1 font-semibold">Imagen del producto:</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImagenChange}
+              className="w-full px-4 py-2 border rounded"
+            />
+          </div>
           <button type="submit" className="btn-primary w-full">Guardar</button>
         </form>
       )}
@@ -126,6 +168,7 @@ function ProductosAdmin() {
       <table className="w-full border">
         <thead>
           <tr className="bg-gray-100">
+            <th className="p-2">Imagen</th>
             <th className="p-2">Nombre</th>
             <th className="p-2">Descripción</th>
             <th className="p-2">Precio</th>
@@ -136,6 +179,19 @@ function ProductosAdmin() {
         <tbody>
           {productos.map(p => (
             <tr key={p.idProducto} className="border-t">
+              <td className="p-2">
+                {p.imagen ? (
+                  <img 
+                    src={`http://localhost:4000/${p.imagen}`} 
+                    alt={p.nombre}
+                    className="w-16 h-16 object-cover rounded"
+                  />
+                ) : (
+                  <div className="w-16 h-16 bg-gray-200 rounded flex items-center justify-center text-xs">
+                    Sin imagen
+                  </div>
+                )}
+              </td>
               <td className="p-2">{p.nombre}</td>
               <td className="p-2">{p.descripcion}</td>
               <td className="p-2">${p.precio}</td>
@@ -208,6 +264,15 @@ function ProductosAdmin() {
             onChange={handleEditChange}
             required
           />
+          <div className="mb-2">
+            <label className="block mb-1 font-semibold">Cambiar imagen (opcional):</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImagenEditChange}
+              className="w-full px-4 py-2 border rounded"
+            />
+          </div>
           <button type="submit" className="btn-primary w-full">Actualizar</button>
           <button type="button" className="btn-secondary w-full mt-2" onClick={() => setEditando(null)}>Cancelar</button>
         </form>

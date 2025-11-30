@@ -20,14 +20,50 @@ const Navbar = () => {
         const user = JSON.parse(userData);
         setUsuario({
           nombre: user.usuario,
-          rol: user.rol
+          rol: user.rol,
+          idUsuario: user.idUsuario,
+          fotoPerfil: user.fotoPerfil || null
         });
+        
+        // Cargar datos actualizados del usuario desde la API
+        if (user.idUsuario) {
+          fetch(`http://localhost:4000/api/usuarios/${user.idUsuario}`)
+            .then(res => res.json())
+            .then(userData => {
+              setUsuario({
+                nombre: userData.usuario,
+                rol: userData.rol,
+                idUsuario: userData.idUsuario,
+                fotoPerfil: userData.fotoPerfil || null
+              });
+              // Actualizar localStorage con los datos más recientes
+              localStorage.setItem('usuario', JSON.stringify(userData));
+            })
+            .catch(error => console.error('Error al cargar datos del usuario:', error));
+        }
       } catch (error) {
         console.error('Error al parsear datos del usuario:', error);
         localStorage.removeItem('usuario');
         setUsuario(null);
       }
     }
+    
+    // Escuchar evento de actualización de usuario
+    const handleUserUpdate = (event) => {
+      const updatedUser = event.detail;
+      setUsuario({
+        nombre: updatedUser.usuario,
+        rol: updatedUser.rol,
+        idUsuario: updatedUser.idUsuario,
+        fotoPerfil: updatedUser.fotoPerfil || null
+      });
+    };
+    
+    window.addEventListener('userUpdated', handleUserUpdate);
+    
+    return () => {
+      window.removeEventListener('userUpdated', handleUserUpdate);
+    };
   }, []);
 
   const handleLogout = () => {
@@ -105,8 +141,16 @@ const Navbar = () => {
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
                 className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
-                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                  <span className="material-symbols-outlined text-white text-sm">person</span>
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center overflow-hidden">
+                  {usuario.fotoPerfil ? (
+                    <img 
+                      src={`http://localhost:4000${usuario.fotoPerfil}`}
+                      alt="Foto de perfil"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="material-symbols-outlined text-white text-sm">person</span>
+                  )}
                 </div>
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{usuario.nombre}</span>
                 <span className="material-symbols-outlined text-gray-500">expand_more</span>

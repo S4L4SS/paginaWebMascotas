@@ -27,6 +27,8 @@ public class Producto implements Serializable {
     @Min(value = 0, message = "El stock no puede ser negativo")
     private Integer stock;
     
+    private String categoria;
+    
     private String imagen;
     
     // Constructores
@@ -97,6 +99,14 @@ public class Producto implements Serializable {
     
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+    
+    public String getCategoria() {
+        return categoria;
+    }
+    
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
     
     // Métodos de utilidad

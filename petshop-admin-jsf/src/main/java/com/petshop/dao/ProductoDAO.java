@@ -76,8 +76,8 @@ public class ProductoDAO {
      * Crear nuevo producto
      */
     public Integer create(Producto producto) throws SQLException {
-        String sql = "INSERT INTO producto (nombre, descripcion, precio, stock, imagen) " +
-                    "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO producto (nombre, descripcion, precio, stock, categoria, imagen) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
         
         try (PreparedStatement pstmt = connection.prepareStatement(sql, 
                 Statement.RETURN_GENERATED_KEYS)) {
@@ -104,14 +104,14 @@ public class ProductoDAO {
      */
     public boolean update(Producto producto) throws SQLException {
         String sql = "UPDATE producto SET nombre = ?, descripcion = ?, " +
-                    "precio = ?, stock = ?, imagen = ? WHERE idProducto = ?";
+                    "precio = ?, stock = ?, categoria = ?, imagen = ? WHERE idProducto = ?";
         
         System.out.println("📝 Ejecutando UPDATE en BD - ID: " + producto.getIdProducto() + 
                           ", Nombre: " + producto.getNombre() + ", Stock: " + producto.getStock());
         
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             setProductoParameters(pstmt, producto);
-            pstmt.setInt(6, producto.getIdProducto());
+            pstmt.setInt(7, producto.getIdProducto());
             
             int affectedRows = pstmt.executeUpdate();
             
@@ -215,7 +215,7 @@ public class ProductoDAO {
      * Extrae un objeto Producto desde un ResultSet
      */
     private Producto extractProductoFromResultSet(ResultSet rs) throws SQLException {
-        return new Producto(
+        Producto producto = new Producto(
             rs.getInt("idProducto"),
             rs.getString("nombre"),
             rs.getString("descripcion"),
@@ -223,6 +223,8 @@ public class ProductoDAO {
             rs.getInt("stock"),
             rs.getString("imagen")
         );
+        producto.setCategoria(rs.getString("categoria"));
+        return producto;
     }
     
     /**
@@ -234,6 +236,7 @@ public class ProductoDAO {
         pstmt.setString(2, producto.getDescripcion());
         pstmt.setDouble(3, producto.getPrecio());
         pstmt.setInt(4, producto.getStock() != null ? producto.getStock() : 0);
-        pstmt.setString(5, producto.getImagen());
+        pstmt.setString(5, producto.getCategoria());
+        pstmt.setString(6, producto.getImagen());
     }
 }

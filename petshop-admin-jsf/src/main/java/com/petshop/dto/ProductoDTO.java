@@ -16,6 +16,7 @@ public class ProductoDTO implements Serializable {
     private String descripcion;
     private Double precio;
     private Integer stock;
+    private String categoria;
     private String imagen;
     private String estadoStock;
     
@@ -31,6 +32,7 @@ public class ProductoDTO implements Serializable {
             this.descripcion = producto.getDescripcion();
             this.precio = producto.getPrecio();
             this.stock = producto.getStock();
+            this.categoria = producto.getCategoria();
             this.imagen = producto.getImagen();
             this.estadoStock = producto.getEstadoStock();
         }
@@ -52,7 +54,9 @@ public class ProductoDTO implements Serializable {
      * Convierte DTO a entidad Producto
      */
     public Producto toEntity() {
-        return new Producto(idProducto, nombre, descripcion, precio, stock, imagen);
+        Producto producto = new Producto(idProducto, nombre, descripcion, precio, stock, imagen);
+        producto.setCategoria(categoria);
+        return producto;
     }
     
     /**
@@ -112,6 +116,14 @@ public class ProductoDTO implements Serializable {
     
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+    
+    public String getCategoria() {
+        return categoria;
+    }
+    
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
     
     public String getEstadoStock() {

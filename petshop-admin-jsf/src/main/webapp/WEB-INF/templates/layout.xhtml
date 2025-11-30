@@ -33,12 +33,17 @@
             </b:dropMenu>
         </b:navbarLinks>
         <b:navbarLinks pull="right">
-            <b:dropMenu value="Admin" icon="user">
+            <b:dropMenu value="#{loginBean.nombreUsuario}" icon="user">
                 <b:navLink value="Mi Perfil" icon="user"/>
                 <b:navLink value="Configuración" icon="cog"/>
                 <b:navLink/>
-                <b:navLink value="Cerrar Sesión" href="#{request.contextPath}/login.xhtml" 
-                          icon="sign-out"/>
+                <h:form style="margin: 0; padding: 0;">
+                    <b:commandButton value="Cerrar Sesión" 
+                                   action="#{loginBean.logout}" 
+                                   icon="sign-out"
+                                   look="link"
+                                   style="text-align: left; width: 100%; padding: 3px 20px;"/>
+                </h:form>
             </b:dropMenu>
         </b:navbarLinks>
     </b:navBar>

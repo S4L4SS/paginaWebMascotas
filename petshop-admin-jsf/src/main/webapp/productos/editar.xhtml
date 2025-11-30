@@ -3,7 +3,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
     <ui:define name="title">Editar Producto - PetShop Admin</ui:define>
@@ -14,7 +15,7 @@
             <f:viewAction action="#{productoBean.cargarProductoParaEdicion()}"/>
         </f:metadata>
         
-        <h:form id="editarProductoForm">
+        <h:form id="editarProductoForm" enctype="multipart/form-data">
             <!-- Header -->
             <b:row>
                 <b:column>
@@ -76,8 +77,34 @@
                         
                         <b:row>
                             <b:column col-md="12">
-                                <b:inputText label="URL de Imagen" 
-                                           value="#{productoBean.productoSeleccionado.imagen}"/>
+                                <b:inputText label="Categoría" 
+                                           value="#{productoBean.productoSeleccionado.categoria}"
+                                           placeholder="Ej: Alimento, Juguetes, Accesorios"/>
+                            </b:column>
+                        </b:row>
+                        
+                        <b:row>
+                            <b:column col-md="12">
+                                <h:panelGroup>
+                                    <label class="control-label">Imagen del Producto</label>
+                                    <p:fileUpload value="#{productoBean.archivoSubido}" 
+                                                mode="simple" 
+                                                skinSimple="true"
+                                                label="Seleccionar Imagen"
+                                                accept="image/*"
+                                                style="margin-top: 5px; margin-bottom: 10px;"/>
+                                    
+                                    <!-- Previsualización de imagen actual -->
+                                    <h:panelGroup rendered="#{not empty productoBean.productoSeleccionado.imagen}">
+                                        <small class="form-text text-muted">Imagen actual:</small>
+                                        <h:graphicImage value="/#{productoBean.productoSeleccionado.imagen}" 
+                                                      style="max-width: 200px; display: block; margin: 10px 0;"
+                                                      alt="Imagen del producto"
+                                                      onerror="this.src='/resources/images/no-image.svg';"/>
+                                    </h:panelGroup>
+                                    
+                                    <small class="form-text text-muted">Ruta de imagen: #{productoBean.productoSeleccionado.imagen}</small>
+                                </h:panelGroup>
                             </b:column>
                         </b:row>
                         
@@ -86,7 +113,7 @@
                         <b:row>
                             <b:column col-md="4">
                                 <b:commandButton value="Actualizar" 
-                                               action="#{productoBean.actualizarProducto()}"
+                                               action="#{productoBean.actualizarProductoConImagen()}"
                                                look="success" 
                                                icon="save"
                                                size="lg"
@@ -95,7 +122,6 @@
                             <b:column col-md="4">
                                 <b:commandButton value="Cancelar" 
                                                action="#{productoBean.cancelarEdicion()}"
-                                               outcome="/productos/lista.xhtml"
                                                look="default" 
                                                icon="times"
                                                size="lg"

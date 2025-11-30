@@ -10,7 +10,7 @@
     <ui:define name="title">Nuevo Producto - PetShop Admin</ui:define>
     
     <ui:define name="content">
-        <h:form id="nuevoProductoForm">
+        <h:form id="nuevoProductoForm" enctype="multipart/form-data">
             <!-- Mensajes de feedback con BootFaces -->
             <b:messages/>
             
@@ -73,9 +73,24 @@
                         
                         <b:row>
                             <b:column col-md="12">
-                                <b:inputText label="URL de Imagen (opcional)" 
-                                           value="#{productoBean.nuevoProducto.imagen}"
-                                           placeholder="http://ejemplo.com/imagen.jpg o ruta local"/>
+                                <b:inputText label="Categoría" 
+                                           value="#{productoBean.nuevoProducto.categoria}"
+                                           placeholder="Ej: Alimento, Juguetes, Accesorios"/>
+                            </b:column>
+                        </b:row>
+                        
+                        <b:row>
+                            <b:column col-md="12">
+                                <h:panelGroup>
+                                    <label class="control-label">Imagen del Producto</label>
+                                    <p:fileUpload value="#{productoBean.archivoSubido}" 
+                                                mode="simple" 
+                                                skinSimple="true"
+                                                label="Seleccionar Imagen"
+                                                accept="image/*"
+                                                style="margin-top: 5px; margin-bottom: 10px;"/>
+                                    <small class="form-text text-muted">Selecciona una imagen desde tu computadora</small>
+                                </h:panelGroup>
                             </b:column>
                         </b:row>
                         
@@ -83,8 +98,8 @@
                         
                         <b:row>
                             <b:column col-md="6">
-                                <b:commandButton value="Guardar Producto" 
-                                               action="#{productoBean.guardarNuevoProducto()}"
+                                <b:commandButton value="Guardar" 
+                                               action="#{productoBean.guardarNuevoProductoConImagen()}"
                                                look="success" 
                                                icon="save"
                                                size="lg"

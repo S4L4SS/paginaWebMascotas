@@ -88,10 +88,11 @@
                         </p:column>
                         
                         <p:column headerText="Imagen" style="width: 100px;">
-                            <h:graphicImage value="#{producto.imagen != null ? '/images/'.concat(producto.imagen) : '/resources/images/no-image.svg'}" 
+                            <h:graphicImage value="#{producto.imagen != null and producto.imagen != '' ? '/'.concat(producto.imagen) : '/resources/images/no-image.svg'}" 
                                           width="60" 
                                           height="60"
-                                          style="object-fit: cover; border-radius: 5px;"/>
+                                          style="object-fit: cover; border-radius: 5px;"
+                                          onerror="this.src='/resources/images/no-image.svg';"/>
                         </p:column>
                         
                         <p:column headerText="Nombre" sortBy="#{producto.nombre}">

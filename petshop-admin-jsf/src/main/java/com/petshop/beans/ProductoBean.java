@@ -7,9 +7,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import java.io.Serializable;
+import org.primefaces.model.file.UploadedFile;
+import java.io.*;
+import java.nio.file.*;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Managed Bean JSF para gestión de productos
@@ -28,6 +31,7 @@ public class ProductoBean implements Serializable {
     private ProductoDTO nuevoProducto;
     private String terminoBusqueda;
     private boolean modoEdicion;
+    private UploadedFile archivoSubido;
     
     /**
      * Inicialización del bean
@@ -233,9 +237,11 @@ public class ProductoBean implements Serializable {
     /**
      * Cancelar edición
      */
-    public void cancelarEdicion() {
+    public String cancelarEdicion() {
         productoSeleccionado = null;
         modoEdicion = false;
+        System.out.println("❌ Edición cancelada");
+        return "lista?faces-redirect=true";
     }
     
     /**
@@ -343,5 +349,124 @@ public class ProductoBean implements Serializable {
     
     public void setModoEdicion(boolean modoEdicion) {
         this.modoEdicion = modoEdicion;
+    }
+    
+    public UploadedFile getArchivoSubido() {
+        return archivoSubido;
+    }
+    
+    public void setArchivoSubido(UploadedFile archivoSubido) {
+        this.archivoSubido = archivoSubido;
+    }
+    
+    /**
+     * Guardar archivo de imagen en el servidor
+     * Retorna la ruta relativa para guardar en BD
+     */
+    private String guardarImagenEnServidor(UploadedFile archivo) {
+        if (archivo == null || archivo.getSize() == 0) {
+            return null;
+        }
+        
+        try {
+            // Obtener extensión del archivo
+            String nombreOriginal = archivo.getFileName();
+            String extension = "";
+            if (nombreOriginal.contains(".")) {
+                extension = nombreOriginal.substring(nombreOriginal.lastIndexOf("."));
+            }
+            
+            // Generar nombre único para evitar colisiones
+            String nombreUnico = System.currentTimeMillis() + "-" + 
+                               UUID.randomUUID().toString().substring(0, 8) + extension;
+            
+            // Ruta absoluta donde guardar (directorio uploads/productos/)
+            String contextPath = FacesContext.getCurrentInstance()
+                    .getExternalContext().getRealPath("/");
+            Path uploadsDir = Paths.get(contextPath, "uploads", "productos");
+            
+            // Crear directorio si no existe
+            if (!Files.exists(uploadsDir)) {
+                Files.createDirectories(uploadsDir);
+                System.out.println("📁 Directorio creado: " + uploadsDir.toString());
+            }
+            
+            // Guardar el archivo
+            Path archivoDestino = uploadsDir.resolve(nombreUnico);
+            try (InputStream input = archivo.getInputStream()) {
+                Files.copy(input, archivoDestino, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("✅ Imagen guardada: " + archivoDestino.toString());
+            }
+            
+            // Retornar ruta relativa para BD (como en Node.js)
+            String rutaRelativa = "uploads/productos/" + nombreUnico;
+            System.out.println("💾 Ruta para BD: " + rutaRelativa);
+            return rutaRelativa;
+            
+        } catch (IOException e) {
+            System.err.println("❌ Error al guardar imagen: " + e.getMessage());
+            e.printStackTrace();
+            addMessage("Error", "No se pudo guardar la imagen: " + e.getMessage(), 
+                      FacesMessage.SEVERITY_ERROR);
+            return null;
+        }
+    }
+    
+    /**
+     * Guardar nuevo producto con imagen
+     */
+    public String guardarNuevoProductoConImagen() {
+        System.out.println("📤 guardarNuevoProductoConImagen() - Iniciando...");
+        System.out.println("   archivoSubido: " + (archivoSubido != null ? archivoSubido.getFileName() + " (" + archivoSubido.getSize() + " bytes)" : "null"));
+        
+        // Si hay archivo subido, guardarlo y actualizar la ruta
+        if (archivoSubido != null && archivoSubido.getSize() > 0) {
+            System.out.println("   ✅ Archivo detectado, guardando...");
+            String rutaImagen = guardarImagenEnServidor(archivoSubido);
+            if (rutaImagen != null) {
+                nuevoProducto.setImagen(rutaImagen);
+                System.out.println("   ✅ Ruta guardada: " + rutaImagen);
+            } else {
+                System.out.println("   ❌ Error al guardar imagen en servidor");
+            }
+            archivoSubido = null; // Limpiar archivo después de procesar
+        } else {
+            System.out.println("   ⚠️ No se detectó archivo subido o está vacío");
+            // Si no hay imagen subida, poner una imagen por defecto
+            if (nuevoProducto.getImagen() == null || nuevoProducto.getImagen().trim().isEmpty()) {
+                nuevoProducto.setImagen("uploads/productos/default.png");
+                System.out.println("   ℹ️ Usando imagen por defecto");
+            }
+        }
+        
+        // Continuar con el guardado normal
+        return guardarNuevoProducto();
+    }
+    
+    /**
+     * Actualizar producto con nueva imagen (si se sube)
+     */
+    public String actualizarProductoConImagen() {
+        System.out.println("📤 actualizarProductoConImagen() - Iniciando...");
+        System.out.println("   archivoSubido: " + (archivoSubido != null ? archivoSubido.getFileName() + " (" + archivoSubido.getSize() + " bytes)" : "null"));
+        System.out.println("   Imagen actual: " + productoSeleccionado.getImagen());
+        
+        // Si hay archivo subido, guardarlo y actualizar la ruta
+        if (archivoSubido != null && archivoSubido.getSize() > 0) {
+            System.out.println("   ✅ Archivo detectado, guardando...");
+            String rutaImagen = guardarImagenEnServidor(archivoSubido);
+            if (rutaImagen != null) {
+                productoSeleccionado.setImagen(rutaImagen);
+                System.out.println("   ✅ Nueva ruta guardada: " + rutaImagen);
+            } else {
+                System.out.println("   ❌ Error al guardar imagen en servidor");
+            }
+            archivoSubido = null; // Limpiar archivo después de procesar
+        } else {
+            System.out.println("   ℹ️ No se detectó nuevo archivo, manteniendo imagen actual");
+        }
+        
+        // Continuar con la actualización normal
+        return actualizarProducto();
     }
 }

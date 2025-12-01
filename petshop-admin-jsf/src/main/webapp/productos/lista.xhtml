@@ -117,10 +117,10 @@
                                     <f:convertNumber integerOnly="true"/>
                                 </p:inputText>
                                 
-                                <!-- Botón AJAX con PrimeFaces (más confiable que jQuery) -->
-                                <p:commandButton icon="ui-icon-refresh"
+                                <!-- Botón AJAX con ícono de actualizar -->
+                                <p:commandButton value="↻"
                                                styleClass="ui-button-info ui-button-sm"
-                                               style="margin-left: 5px;"
+                                               style="margin-left: 5px; font-size: 14px; font-weight: bold; padding: 4px 8px;"
                                                action="#{productoBean.actualizarStock(producto)}"
                                                update="@form"
                                                title="Actualizar stock"/>
@@ -131,20 +131,21 @@
                             </h:panelGroup>
                         </p:column>
                         
-                        <p:column headerText="Acciones" style="width: 150px; text-align: center;">
-                            <b:commandButton icon="edit" 
-                                           look="warning" 
-                                           size="sm"
-                                           action="#{productoBean.prepararEdicion(producto)}"
-                                           title="Editar"/>
-                            <b:commandButton icon="trash" 
-                                           look="danger" 
-                                           size="sm"
-                                           style="margin-left: 5px;"
-                                           action="#{productoBean.eliminarProducto(producto)}"
-                                           update="productosTable"
-                                           onclick="return confirm('¿Está seguro de eliminar este producto?');"
-                                           title="Eliminar"/>
+                        <p:column headerText="Acciones" style="width: 150px; text-align: center; vertical-align: middle;">
+                            <h:panelGroup style="display: flex; justify-content: center; align-items: center; gap: 5px;">
+                                <b:commandButton icon="edit" 
+                                               look="warning" 
+                                               size="sm"
+                                               action="#{productoBean.prepararEdicion(producto)}"
+                                               title="Editar"/>
+                                <b:commandButton icon="trash" 
+                                               look="danger" 
+                                               size="sm"
+                                               action="#{productoBean.eliminarProducto(producto)}"
+                                               update="productosTable"
+                                               onclick="return confirm('¿Está seguro de eliminar este producto?');"
+                                               title="Eliminar"/>
+                            </h:panelGroup>
                         </p:column>
                     </p:dataTable>
                 </b:column>

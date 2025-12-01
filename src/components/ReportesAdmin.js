@@ -185,13 +185,13 @@ function ReportesAdmin() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           <MetricaCard 
             titulo="Ventas Hoy" 
-            valor={`${resumen.ventasHoy.cantidad} ($${resumen.ventasHoy.total})`}
+            valor={`${resumen.ventasHoy.cantidad} (S/ ${resumen.ventasHoy.total})`}
             icono="💰"
             color="bg-green-500"
           />
           <MetricaCard 
             titulo="Ventas Semana" 
-            valor={`${resumen.ventasSemana.cantidad} ($${resumen.ventasSemana.total})`}
+            valor={`${resumen.ventasSemana.cantidad} (S/ ${resumen.ventasSemana.total})`}
             icono="📊"
             color="bg-blue-500"
           />
@@ -253,7 +253,7 @@ function ReportesAdmin() {
                       {producto.cantidadVentas}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
-                      ${producto.totalVentas}
+                      S/ {producto.totalVentas}
                     </td>
                   </tr>
                 ))}

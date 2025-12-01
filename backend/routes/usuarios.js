@@ -150,8 +150,8 @@ router.post('/register', upload.single('fotoPerfil'), (req, res) => {
     return res.status(400).json({ error: 'Debes ser mayor de 18 años para registrarte' });
   }
   
-  // Determinar nombre de foto de perfil
-  const fotoPerfil = req.file ? req.file.filename : 'default-avatar.svg';
+  // Determinar nombre de foto de perfil con ruta completa
+  const fotoPerfil = req.file ? `/api/usuarios/profile-pictures/${req.file.filename}` : 'default-avatar.svg';
   
   // Verificar si el usuario ya existe
   connection.query('SELECT * FROM usuario WHERE usuario = ? OR correo = ?', [usuario, correo], (err, existing) => {

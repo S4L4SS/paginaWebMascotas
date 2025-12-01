@@ -64,11 +64,15 @@ const UsuarioController = {
       
       console.log(`[LOGIN] ÉXITO: Login exitoso para "${user.usuario}"`);
       
-      // Solo enviar los campos necesarios del usuario
+      // Solo enviar los campos necesarios del usuario (INCLUYENDO fotoPerfil)
       const userData = {
         idUsuario: user.idUsuario,
         usuario: user.usuario,
         correo: user.correo,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        fechaNacimiento: user.fechaNacimiento,
+        fotoPerfil: user.fotoPerfil,
         rol: user.rol || 'cliente'
       };
       res.json({ mensaje: 'Login exitoso', user: userData });

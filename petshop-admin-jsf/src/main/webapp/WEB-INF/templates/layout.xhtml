@@ -8,15 +8,17 @@
     
 <h:head>
     <title>
-        <ui:insert name="title">PetShop Admin</ui:insert>
+        <ui:insert name="title">Mundo Mascotas🐶</ui:insert>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <h:outputStylesheet library="css" name="custom.css"/>
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </h:head>
 
 <h:body>
     <!-- Navbar -->
-    <b:navBar brand="🐾 PetShop Admin" brandHref="#{request.contextPath}/index.xhtml" 
+    <b:navBar brand="Mundo Mascotas🐶" brandHref="#{request.contextPath}/index.xhtml" 
               inverse="true" fixed="top">
         <b:navbarLinks>
             <b:navLink value="Dashboard" href="#{request.contextPath}/dashboard.xhtml" 
@@ -27,9 +29,6 @@
                 <b:navLink value="Nuevo Producto" 
                           href="#{request.contextPath}/productos/nuevo.xhtml" 
                           icon="plus"/>
-                <b:navLink value="Reportes" icon="bar-chart"/>
-                <b:navLink/>
-                <b:navLink value="Configuración" icon="wrench"/>
             </b:dropMenu>
         </b:navbarLinks>
         <b:navbarLinks pull="right">
@@ -67,7 +66,7 @@
     <footer style="margin-top: 50px; padding: 20px; background-color: #f8f9fa; text-align: center;">
         <p>
             <small>
-                © 2024 PetShop Admin - Sistema de gestión con JSF + BootFaces
+                © 2025 Mundo Mascotas🐶 - Sistema de gestión
             </small>
         </p>
     </footer>

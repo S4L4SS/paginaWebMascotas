@@ -26,11 +26,46 @@ export default function Carrito() {
         titular: ''
     });
     const [cargandoCompra, setCargandoCompra] = useState(false);
+    const [codigoGenerado, setCodigoGenerado] = useState(false);
+    const [generandoCodigo, setGenerandoCodigo] = useState(false);
+    const [mostrarQR, setMostrarQR] = useState(false);
+
+    // Generar código QR para Yape o Plin
+    const generarCodigoPago = () => {
+        if (metodoPago !== 'yape' && metodoPago !== 'plin') {
+            return;
+        }
+
+        setGenerandoCodigo(true);
+        setCodigoGenerado(false);
+        setMostrarQR(false);
+
+        // Simular carga de 2 segundos
+        setTimeout(() => {
+            setGenerandoCodigo(false);
+            setCodigoGenerado(true);
+            setMostrarQR(true);
+        }, 2000);
+    };
+
+    // Restablecer cuando cambia el método de pago
+    const cambiarMetodoPago = (nuevoMetodo) => {
+        setMetodoPago(nuevoMetodo);
+        setCodigoGenerado(false);
+        setGenerandoCodigo(false);
+        setMostrarQR(false);
+    };
 
     // Realizar compra
     const realizarCompra = async () => {
         if (carrito.length === 0) {
             alert('Tu carrito está vacío');
+            return;
+        }
+
+        // Validar para Yape o Plin que se haya generado el código
+        if ((metodoPago === 'yape' || metodoPago === 'plin') && !codigoGenerado) {
+            alert('No es posible procesar la compra. Por favor genera el código de pago primero.');
             return;
         }
 
@@ -183,7 +218,7 @@ export default function Carrito() {
                                         name="payment-method" 
                                         value="tarjeta"
                                         checked={metodoPago === 'tarjeta'}
-                                        onChange={(e) => setMetodoPago(e.target.value)}
+                                        onChange={(e) => cambiarMetodoPago(e.target.value)}
                                         className="form-radio h-5 w-5 text-primary focus:ring-primary/50"
                                     />
                                     <span className="font-medium">💳 Tarjeta</span>
@@ -198,7 +233,7 @@ export default function Carrito() {
                                         name="payment-method" 
                                         value="yape"
                                         checked={metodoPago === 'yape'}
-                                        onChange={(e) => setMetodoPago(e.target.value)}
+                                        onChange={(e) => cambiarMetodoPago(e.target.value)}
                                         className="form-radio h-5 w-5 text-primary focus:ring-primary/50"
                                     />
                                     <span className="font-medium">📱 Yape</span>
@@ -213,12 +248,64 @@ export default function Carrito() {
                                         name="payment-method" 
                                         value="plin"
                                         checked={metodoPago === 'plin'}
-                                        onChange={(e) => setMetodoPago(e.target.value)}
+                                        onChange={(e) => cambiarMetodoPago(e.target.value)}
                                         className="form-radio h-5 w-5 text-primary focus:ring-primary/50"
                                     />
                                     <span className="font-medium">💰 Plin</span>
                                 </label>
                             </div>
+
+                            {/* Botón para generar código QR (Yape/Plin) */}
+                            {(metodoPago === 'yape' || metodoPago === 'plin') && (
+                                <div className="space-y-4">
+                                    <button
+                                        onClick={generarCodigoPago}
+                                        disabled={generandoCodigo || codigoGenerado}
+                                        className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold hover:from-purple-700 hover:to-purple-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                    >
+                                        {generandoCodigo ? (
+                                            <>
+                                                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                                Generando código...
+                                            </>
+                                        ) : codigoGenerado ? (
+                                            <>
+                                                <span className="material-symbols-outlined">check_circle</span>
+                                                Código generado
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span className="material-symbols-outlined">qr_code_2</span>
+                                                Generar código de pago
+                                            </>
+                                        )}
+                                    </button>
+
+                                    {/* Mostrar código QR */}
+                                    {mostrarQR && (
+                                        <div className="bg-white dark:bg-gray-900 p-6 rounded-lg border-2 border-primary shadow-lg">
+                                            <div className="text-center space-y-3">
+                                                <p className="font-bold text-gray-800 dark:text-gray-200">
+                                                    Escanea el código {metodoPago === 'yape' ? 'Yape' : 'Plin'}
+                                                </p>
+                                                <div className="flex justify-center">
+                                                    <img 
+                                                        src={metodoPago === 'yape' ? '/Imagen1.png' : '/Imagen2.png'}
+                                                        alt={`Código QR ${metodoPago}`}
+                                                        className="w-48 h-48 rounded-lg"
+                                                    />
+                                                </div>
+                                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                    Total a pagar: <span className="font-bold text-primary">S/{total.toFixed(2)}</span>
+                                                </p>
+                                                <p className="text-xs text-gray-500 dark:text-gray-500">
+                                                    Una vez realizado el pago, presiona "Realizar Compra"
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
 
                             {/* Formulario de tarjeta (solo si se selecciona tarjeta) */}
                             {metodoPago === 'tarjeta' && (

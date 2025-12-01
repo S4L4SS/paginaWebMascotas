@@ -91,11 +91,11 @@ class ReportesController {
       
       doc.fontSize(12);
       if (periodo === 'dia') {
-        doc.text(`Ventas de hoy: ${resumen.ventasHoy.cantidad} ventas - $${resumen.ventasHoy.total}`, 70, currentY);
+        doc.text(`Ventas de hoy: ${resumen.ventasHoy.cantidad} ventas - S/ ${resumen.ventasHoy.total}`, 70, currentY);
       } else if (periodo === 'semana') {
-        doc.text(`Ventas esta semana: ${resumen.ventasSemana.cantidad} ventas - $${resumen.ventasSemana.total}`, 70, currentY);
+        doc.text(`Ventas esta semana: ${resumen.ventasSemana.cantidad} ventas - S/ ${resumen.ventasSemana.total}`, 70, currentY);
       } else {
-        doc.text(`Ventas este mes: ${resumen.ventasMes.cantidad} ventas - $${resumen.ventasMes.total}`, 70, currentY);
+        doc.text(`Ventas este mes: ${resumen.ventasMes.cantidad} ventas - S/ ${resumen.ventasMes.total}`, 70, currentY);
       }
       currentY += 20;
       
@@ -111,7 +111,7 @@ class ReportesController {
       doc.fontSize(12);
       productosTop.forEach((producto, index) => {
         doc.text(`${index + 1}. ${producto.nombre}`, 70, currentY);
-        doc.text(`   Ventas: ${producto.cantidadVentas} | Total: $${producto.totalVentas}`, 90, currentY + 15);
+        doc.text(`   Ventas: ${producto.cantidadVentas} | Total: S/ ${producto.totalVentas}`, 90, currentY + 15);
         currentY += 40;
       });
 
@@ -134,7 +134,7 @@ class ReportesController {
         ventas.slice(0, 15).forEach(venta => { // Mostrar solo los primeros 15 para no saturar
           doc.text(venta.fecha.toString(), 70, currentY);
           doc.text(venta.cantidadVentas.toString(), 200, currentY);
-          doc.text(`$${venta.totalVentas}`, 300, currentY);
+          doc.text(`S/ ${venta.totalVentas}`, 300, currentY);
           currentY += 15;
         });
       }

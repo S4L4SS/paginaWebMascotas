@@ -20,7 +20,6 @@ function formatPrice(price) {
 
 // Inicialización cuando el documento está listo
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('PetShop Admin JSF - Custom JS loaded');
+    console.log('Mundo Mascotas🐶 - Custom JS loaded');
     
-    // Agregar eventos adicionales si es necesario
 });

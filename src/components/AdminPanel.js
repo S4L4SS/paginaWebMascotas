@@ -194,7 +194,7 @@ function ProductosAdmin() {
               </td>
               <td className="p-2">{p.nombre}</td>
               <td className="p-2">{p.descripcion}</td>
-              <td className="p-2">${p.precio}</td>
+              <td className="p-2">S/ {p.precio}</td>
               <td className="p-2">{p.stock}</td>
               <td className="p-2 flex gap-2">
                 <button

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import ReportesAdmin from '../../components/ReportesAdmin';
+import { API_URL } from '@/config/api';
 
 // Componente principal del panel de administración
 export default function AdminPage() {

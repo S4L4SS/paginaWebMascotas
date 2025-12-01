@@ -299,7 +299,7 @@ export default function Carrito() {
                                                     Total a pagar: <span className="font-bold text-primary">S/{total.toFixed(2)}</span>
                                                 </p>
                                                 <p className="text-xs text-gray-500 dark:text-gray-500">
-                                                    Una vez realizado el pago, presiona "Realizar Compra"
+                                                    Una vez realizado el pago, presiona &quot;Realizar Compra&quot;
                                                 </p>
                                             </div>
                                         </div>

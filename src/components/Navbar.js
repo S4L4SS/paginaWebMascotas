@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const Navbar = () => {
   return (
@@ -7,10 +8,10 @@ const Navbar = () => {
         <span className="font-poppins text-xl font-bold text-primary">MascotasShop</span>
       </div>
       <div className="flex gap-4">
-        <a href="/" className="text-white hover:text-secondary">Inicio</a>
-        <a href="/catalogo" className="text-white hover:text-secondary">Catálogo</a>
-        <a href="/admin" className="text-white hover:text-secondary">Admin</a>
-        <a href="/login" className="btn-primary">Ingresar</a>
+        <Link href="/" className="text-white hover:text-secondary">Inicio</Link>
+        <Link href="/catalogo" className="text-white hover:text-secondary">Catálogo</Link>
+        <Link href="/admin" className="text-white hover:text-secondary">Admin</Link>
+        <Link href="/login" className="btn-primary">Ingresar</Link>
       </div>
     </nav>
   );

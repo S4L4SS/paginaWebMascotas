@@ -261,7 +261,7 @@ export default function ProductosPage() {
           <div className="mt-4 flex flex-wrap gap-2">
             {filtro && (
               <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                Búsqueda: "{filtro}"
+                Búsqueda: &quot;{filtro}&quot;
               </span>
             )}
             {animalFiltro !== 'todos' && (

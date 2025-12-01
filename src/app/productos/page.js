@@ -20,7 +20,7 @@ export default function ProductosPage() {
 
   const fetchProductos = async () => {
     try {
-      const res = await fetch('http://localhost:4000/api/productos');
+      const res = await fetch(`${API_URL}/api/productos`);
       const data = await res.json();
       setProductos(data);
       
@@ -322,7 +322,7 @@ export default function ProductosPage() {
                 <div className="aspect-w-1 aspect-h-1">
                   {producto.imagen ? (
                     <img
-                      src={`http://localhost:4000/${producto.imagen}`}
+                      src={`${API_URL}/${producto.imagen}`}
                       alt={producto.nombre}
                       className="w-full h-48 object-cover"
                     />

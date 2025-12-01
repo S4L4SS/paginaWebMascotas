@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { API_URL } from '@/config/api';
 
 const EditarPerfil = () => {
   const router = useRouter();
@@ -39,7 +40,11 @@ const EditarPerfil = () => {
       
       // Establecer imagen de perfil actual si existe
       if (user.fotoPerfil) {
-        setPreviewImage(`http://localhost:4000${user.fotoPerfil}`);
+        // Si es URL completa (Cloudinary), usarla directamente
+        const imageUrl = (user.fotoPerfil.startsWith('http://') || user.fotoPerfil.startsWith('https://'))
+          ? user.fotoPerfil
+          : `${API_URL}${user.fotoPerfil}`;
+        setPreviewImage(imageUrl);
       }
     } catch (error) {
       console.error('Error al parsear datos del usuario:', error);
@@ -87,7 +92,7 @@ const EditarPerfil = () => {
         formDataToSend.append('fotoPerfil', fotoPerfil);
       }
 
-      const response = await fetch(`http://localhost:4000/api/usuarios/${usuario.idUsuario}/perfil`, {
+      const response = await fetch(`${API_URL}/api/usuarios/${usuario.idUsuario}/perfil`, {
         method: 'PUT',
         body: formDataToSend
       });

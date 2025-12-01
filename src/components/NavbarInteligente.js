@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCarrito } from '../contexts/CarritoContext';
+import { API_URL } from '../config/api';
 
 const Navbar = () => {
   const [usuario, setUsuario] = useState(null);
@@ -10,6 +11,19 @@ const Navbar = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const router = useRouter();
   const { cantidadTotal } = useCarrito();
+
+  // Helper para obtener la URL correcta de la foto de perfil
+  const obtenerUrlFotoPerfil = (fotoPerfil) => {
+    if (!fotoPerfil || fotoPerfil === 'default-avatar.svg') {
+      return null; // No hay foto, mostrar ícono por defecto
+    }
+    // Si ya es una URL completa (Cloudinary), devolverla tal cual
+    if (fotoPerfil.startsWith('http://') || fotoPerfil.startsWith('https://')) {
+      return fotoPerfil;
+    }
+    // Si es una ruta relativa (sistema antiguo), agregar el dominio
+    return `${API_URL}${fotoPerfil}`;
+  };
 
   useEffect(() => {
     // Verificar si hay un usuario loggeado
@@ -27,7 +41,7 @@ const Navbar = () => {
         
         // Cargar datos actualizados del usuario desde la API
         if (user.idUsuario) {
-          fetch(`http://localhost:4000/api/usuarios/${user.idUsuario}`)
+          fetch(`${API_URL}/api/usuarios/${user.idUsuario}`)
             .then(res => res.json())
             .then(userData => {
               setUsuario({
@@ -142,9 +156,9 @@ const Navbar = () => {
                 className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center overflow-hidden">
-                  {usuario.fotoPerfil ? (
+                  {obtenerUrlFotoPerfil(usuario.fotoPerfil) ? (
                     <img 
-                      src={`http://localhost:4000${usuario.fotoPerfil}`}
+                      src={obtenerUrlFotoPerfil(usuario.fotoPerfil)}
                       alt="Foto de perfil"
                       className="w-full h-full object-cover"
                     />
@@ -162,9 +176,9 @@ const Navbar = () => {
                   <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
                     <div className="flex items-center">
                       <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center mr-3 overflow-hidden">
-                        {usuario.fotoPerfil ? (
+                        {obtenerUrlFotoPerfil(usuario.fotoPerfil) ? (
                           <img 
-                            src={`http://localhost:4000${usuario.fotoPerfil}`} 
+                            src={obtenerUrlFotoPerfil(usuario.fotoPerfil)} 
                             alt="Foto de perfil"
                             className="w-full h-full object-cover"
                           />
@@ -251,10 +265,10 @@ const Navbar = () => {
             {usuario ? (
               <>
                 <div className="flex items-center py-3 px-3 bg-blue-50 dark:bg-blue-900/20 rounded-md mb-3">
-                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center mr-3 flex-shrink-0 overflow-hidden">
-                    {usuario.fotoPerfil ? (
+                    <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
+                    {obtenerUrlFotoPerfil(usuario.fotoPerfil) ? (
                       <img 
-                        src={`http://localhost:4000${usuario.fotoPerfil}`} 
+                        src={obtenerUrlFotoPerfil(usuario.fotoPerfil)} 
                         alt="Foto de perfil"
                         className="w-full h-full object-cover"
                       />

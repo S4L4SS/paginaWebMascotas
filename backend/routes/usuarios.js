@@ -4,26 +4,11 @@ const connection = require('../config/db');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { profilePictureStorage } = require('../config/cloudinary');
 
-// Configurar multer para subida de imágenes
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const uploadDir = path.join(__dirname, '../uploads/profile-pictures');
-    // Crear directorio si no existe
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    // Generar nombre único: usuario_timestamp.extension
-    const uniqueName = `${req.body.userId || 'user'}_${Date.now()}${path.extname(file.originalname)}`;
-    cb(null, uniqueName);
-  }
-});
-
+// Configurar multer con Cloudinary storage
 const upload = multer({ 
-  storage: storage,
+  storage: profilePictureStorage,
   limits: {
     fileSize: 5 * 1024 * 1024 // 5MB límite
   },
@@ -37,8 +22,8 @@ const upload = multer({
   }
 });
 
-// Servir archivos estáticos de imágenes de perfil
-router.use('/profile-pictures', express.static(path.join(__dirname, '../uploads/profile-pictures')));
+// Ya no necesitamos servir archivos estáticos porque Cloudinary lo hace
+// router.use('/profile-pictures', express.static(...)) - ELIMINADO
 
 // Función para comparación exacta carácter por carácter
 function isExactMatch(str1, str2) {
@@ -150,8 +135,9 @@ router.post('/register', upload.single('fotoPerfil'), (req, res) => {
     return res.status(400).json({ error: 'Debes ser mayor de 18 años para registrarte' });
   }
   
-  // Determinar nombre de foto de perfil con ruta completa
-  const fotoPerfil = req.file ? `/api/usuarios/profile-pictures/${req.file.filename}` : 'default-avatar.svg';
+  // Determinar nombre de foto de perfil con URL de Cloudinary
+  const fotoPerfil = req.file ? req.file.path : 'default-avatar.svg';
+  console.log('[REGISTER] Foto de perfil URL:', fotoPerfil);
   
   // Verificar si el usuario ya existe
   connection.query('SELECT * FROM usuario WHERE usuario = ? OR correo = ?', [usuario, correo], (err, existing) => {
@@ -161,14 +147,8 @@ router.post('/register', upload.single('fotoPerfil'), (req, res) => {
     }
     
     if (existing.length > 0) {
-      // Si hay error y se subió una foto, eliminarla
-      if (req.file) {
-        try {
-          fs.unlinkSync(req.file.path);
-        } catch (deleteError) {
-          console.error('[REGISTER] Error eliminando foto tras conflicto:', deleteError);
-        }
-      }
+      // Con Cloudinary, las imágenes se quedan en la nube (se pueden eliminar manualmente si es necesario)
+      console.log('[REGISTER] Usuario o correo ya existe');
       return res.status(400).json({ error: 'El usuario o correo ya existe' });
     }
     
@@ -278,10 +258,10 @@ router.put('/:id/perfil', upload.single('fotoPerfil'), (req, res) => {
     fechaNacimiento
   };
   
-  // Si se subió una imagen, agregar la ruta
+  // Si se subió una imagen, agregar la URL de Cloudinary
   if (req.file) {
-    updateData.fotoPerfil = `/api/usuarios/profile-pictures/${req.file.filename}`;
-    console.log(`[PERFIL] Nueva foto: ${updateData.fotoPerfil}`);
+    updateData.fotoPerfil = req.file.path; // Cloudinary devuelve la URL completa en req.file.path
+    console.log(`[PERFIL] Nueva foto Cloudinary: ${updateData.fotoPerfil}`);
   }
   
   connection.query(

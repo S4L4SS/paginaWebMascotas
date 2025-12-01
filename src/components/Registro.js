@@ -102,7 +102,7 @@ const Registro = ({ onRegister }) => {
         }
       });
 
-      const res = await fetch('http://localhost:4000/api/usuarios/register', {
+      const res = await fetch(`${API_URL}/api/usuarios/register`, {
         method: 'POST',
         body: formDataToSend
       });

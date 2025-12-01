@@ -43,13 +43,13 @@ export default function AdminPage() {
     }
 
     // Cargar productos
-    fetch('http://localhost:4000/api/productos')
+    fetch(`${API_URL}/api/productos`)
       .then(res => res.json())
       .then(setProductos)
       .catch(console.error);
 
     // Cargar usuarios
-    fetch('http://localhost:4000/api/usuarios')
+    fetch(`${API_URL}/api/usuarios`)
       .then(res => res.json())
       .then(setUsuarios)
       .catch(console.error);
@@ -83,12 +83,12 @@ export default function AdminPage() {
       formData.append('imagen', imagenNueva);
     }
 
-    const res = await fetch('http://localhost:4000/api/productos', {
+    const res = await fetch(`${API_URL}/api/productos`, {
       method: 'POST',
       body: formData
     });
     if (res.ok) {
-      const resProductos = await fetch('http://localhost:4000/api/productos');
+      const resProductos = await fetch(`${API_URL}/api/productos`);
       const productosActualizados = await resProductos.json();
       setProductos(productosActualizados);
       setNuevo({ nombre: '', descripcion: '', precio: '', stock: '' });
@@ -118,12 +118,12 @@ export default function AdminPage() {
       formData.append('imagen', imagenEdit);
     }
 
-    const res = await fetch(`http://localhost:4000/api/productos/${editando}`, {
+    const res = await fetch(`${API_URL}/api/productos/${editando}`, {
       method: 'PUT',
       body: formData
     });
     if (res.ok) {
-      const resProductos = await fetch('http://localhost:4000/api/productos');
+      const resProductos = await fetch(`${API_URL}/api/productos`);
       const productosActualizados = await resProductos.json();
       setProductos(productosActualizados);
       setEditando(null);
@@ -134,7 +134,7 @@ export default function AdminPage() {
 
   const handleDelete = async (id) => {
     if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-      const res = await fetch(`http://localhost:4000/api/productos/${id}`, {
+      const res = await fetch(`${API_URL}/api/productos/${id}`, {
         method: 'DELETE'
       });
       if (res.ok) {
@@ -145,7 +145,7 @@ export default function AdminPage() {
 
   // Funciones para usuarios
   const cambiarRol = async (id, rol) => {
-    const res = await fetch(`http://localhost:4000/api/usuarios/${id}/rol`, {
+    const res = await fetch(`${API_URL}/api/usuarios/${id}/rol`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ rol: rol === "admin" ? "cliente" : "admin" })

@@ -5,7 +5,7 @@ const Catalogo = () => {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/productos')
+    fetch(`${API_URL}/api/productos`)
       .then(res => res.json())
       .then(data => setProductos(data))
       .catch(err => console.error('Error al cargar productos:', err));
@@ -17,7 +17,7 @@ const Catalogo = () => {
         <div key={prod.idProducto} className="card w-72">
           {prod.imagen ? (
             <img 
-              src={`http://localhost:4000/${prod.imagen}`} 
+              src={`${API_URL}/${prod.imagen}`} 
               alt={prod.nombre} 
               className="w-full h-40 object-cover mb-4 rounded" 
             />

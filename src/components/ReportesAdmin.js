@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { API_URL } from '../config/api';
 
 // Componente para mostrar métricas en tarjetas
 function MetricaCard({ titulo, valor, icono, color = "bg-blue-500" }) {
@@ -82,21 +83,21 @@ function ReportesAdmin() {
     
     try {
       // Cargar resumen general
-      const resumenRes = await fetch('http://localhost:4000/api/reportes/resumen');
+      const resumenRes = await fetch(`${API_URL}/api/reportes/resumen`);
       if (resumenRes.ok) {
         const resumenData = await resumenRes.json();
         setResumen(resumenData);
       }
 
       // Cargar datos de ventas por período
-      const ventasRes = await fetch(`http://localhost:4000/api/reportes/ventas?periodo=${periodo}`);
+      const ventasRes = await fetch(`${API_URL}/api/reportes/ventas?periodo=${periodo}`);
       if (ventasRes.ok) {
         const ventasData = await ventasRes.json();
         setVentasData(ventasData);
       }
 
       // Cargar productos más vendidos
-      const productosRes = await fetch('http://localhost:4000/api/reportes/productos-top?limite=5');
+      const productosRes = await fetch(`${API_URL}/api/reportes/productos-top?limite=5`);
       if (productosRes.ok) {
         const productosData = await productosRes.json();
         setProductosTop(productosData);
@@ -112,7 +113,7 @@ function ReportesAdmin() {
 
   const descargarPDF = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/api/reportes/pdf?periodo=${periodo}`);
+      const response = await fetch(`${API_URL}/api/reportes/pdf?periodo=${periodo}`);
       
       if (response.ok) {
         const blob = await response.blob();

@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useReducer, useEffect } from 'react';
+import { API_URL } from '../config/api';
 
 // Tipos de acciones para el carrito
 const CARRITO_ACTIONS = {
@@ -159,7 +160,7 @@ export const CarritoProvider = ({ children }) => {
                 metodoPago: datosCompra.metodoPago || 'tarjeta'
             };
 
-            const response = await fetch('http://localhost:4000/api/compras/procesar', {
+            const response = await fetch(`${API_URL}/api/compras/procesar`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

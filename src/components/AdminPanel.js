@@ -14,7 +14,7 @@ function ProductosAdmin() {
 
   // Obtener productos al cargar
   React.useEffect(() => {
-    fetch('http://localhost:4000/api/productos')
+    fetch(`${API_URL}/api/productos`)
       .then(res => res.json())
       .then(setProductos);
   }, []);
@@ -46,14 +46,14 @@ function ProductosAdmin() {
       formData.append('imagen', imagenNueva);
     }
 
-    const res = await fetch('http://localhost:4000/api/productos', {
+    const res = await fetch(`${API_URL}/api/productos`, {
       method: 'POST',
       body: formData
     });
     if (res.ok) {
       const prod = await res.json();
       // Recargar productos para obtener la imagen
-      const resProductos = await fetch('http://localhost:4000/api/productos');
+      const resProductos = await fetch(`${API_URL}/api/productos`);
       const productosActualizados = await resProductos.json();
       setProductos(productosActualizados);
       setNuevo({ nombre: '', descripcion: '', precio: '', stock: '' });
@@ -84,13 +84,13 @@ function ProductosAdmin() {
       formData.append('imagen', imagenEdit);
     }
 
-    const res = await fetch(`http://localhost:4000/api/productos/${editando}`, {
+    const res = await fetch(`${API_URL}/api/productos/${editando}`, {
       method: 'PUT',
       body: formData
     });
     if (res.ok) {
       // Recargar productos para obtener la imagen actualizada
-      const resProductos = await fetch('http://localhost:4000/api/productos');
+      const resProductos = await fetch(`${API_URL}/api/productos`);
       const productosActualizados = await resProductos.json();
       setProductos(productosActualizados);
       setEditando(null);
@@ -100,7 +100,7 @@ function ProductosAdmin() {
   };
 
   const handleDelete = async (id) => {
-    const res = await fetch(`http://localhost:4000/api/productos/${id}`, {
+    const res = await fetch(`${API_URL}/api/productos/${id}`, {
       method: 'DELETE'
     });
     if (res.ok) {
@@ -182,7 +182,7 @@ function ProductosAdmin() {
               <td className="p-2">
                 {p.imagen ? (
                   <img 
-                    src={`http://localhost:4000/${p.imagen}`} 
+                    src={`${API_URL}/${p.imagen}`} 
                     alt={p.nombre}
                     className="w-16 h-16 object-cover rounded"
                   />
@@ -286,13 +286,13 @@ function UsuariosAdmin() {
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/usuarios')
+    fetch(`${API_URL}/api/usuarios`)
       .then(res => res.json())
       .then(setUsuarios);
   }, []);
 
   const cambiarRol = async (id, rol) => {
-    await fetch(`http://localhost:4000/api/usuarios/${id}/rol`, {
+    await fetch(`${API_URL}/api/usuarios/${id}/rol`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ rol: rol === "admin" ? "cliente" : "admin" })

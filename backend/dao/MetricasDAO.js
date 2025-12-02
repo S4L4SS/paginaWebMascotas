@@ -67,6 +67,9 @@ class MetricasDAO {
   static async getProductosMasVendidos(limite = 10) {
     const connection = await db.getConnection();
     try {
+      // Asegurar que limite sea un número entero
+      const limiteNum = parseInt(limite) || 10;
+      
       const query = `
         SELECT 
           p.nombre,
@@ -78,10 +81,10 @@ class MetricasDAO {
         WHERE m.tipo = 'compra' AND m.entidad = 'producto'
         GROUP BY p.idProducto, p.nombre
         ORDER BY cantidadVentas DESC
-        LIMIT ?
+        LIMIT ${limiteNum}
       `;
       
-      const [rows] = await connection.execute(query, [limite]);
+      const [rows] = await connection.execute(query);
       return rows;
     } finally {
       connection.release();

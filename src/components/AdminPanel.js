@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { API_URL } from '../config/api';
 import ReportesAdmin from './ReportesAdmin';
 
 // Componente para la gestión de productos - ACTUALIZADO 30/11/2025

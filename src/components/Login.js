@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Registro from './Registro';
+import { API_URL } from '../config/api';
 
 const Login = () => {
   const [formData, setFormData] = useState({

@@ -1,6 +1,7 @@
 
 "use client";
 import React, { useState } from 'react';
+import { API_URL } from '../config/api';
 
 const Registro = ({ onRegister }) => {
   const [formData, setFormData] = useState({

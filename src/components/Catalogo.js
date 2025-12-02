@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import { API_URL } from '../config/api';
 
 const Catalogo = () => {
   const [productos, setProductos] = useState([]);

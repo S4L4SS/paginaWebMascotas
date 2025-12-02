@@ -11,7 +11,14 @@ const cloudinaryRouter = require('./routes/cloudinaryRoutes');
 
 const app = express();
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:8080'],
+  origin: [
+    'http://localhost:3000', 
+    'http://localhost:3001', 
+    'http://localhost:8080',
+    'https://mundo-mascotas.vercel.app',
+    'https://pagina-web-mascotas.vercel.app',
+    /https:\/\/.*\.vercel\.app$/ // Permite todos los dominios de Vercel
+  ],
   credentials: true
 }));
 app.use(bodyParser.json());

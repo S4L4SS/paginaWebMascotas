@@ -1,5 +1,5 @@
 /**
- * Custom JavaScript para PetShop Admin JSF
+ * Custom JavaScript para Mundo Mascotas🐶
  */
 
 // Función para mostrar loading

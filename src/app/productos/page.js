@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useCarrito } from '../../contexts/CarritoContext';
+import { API_URL } from '../../config/api';
 
 export default function ProductosPage() {
   const [productos, setProductos] = useState([]);

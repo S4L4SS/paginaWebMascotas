@@ -1,20 +1,22 @@
 const mysql = require('mysql2/promise');
 const mysqlCallback = require('mysql2');
+require('dotenv').config();
+
+// Configuración de la base de datos usando variables de entorno
+const dbConfig = {
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_DATABASE || 'mascotasdb',
+  port: process.env.DB_PORT || 3306
+};
 
 // Conexión tradicional con callbacks (para productos y usuarios existentes)
-const connection = mysqlCallback.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '', // Contraseña vacía para XAMPP
-  database: 'mascotasdb',
-});
+const connection = mysqlCallback.createConnection(dbConfig);
 
 // Pool para operaciones con promesas (para reportes)
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '', // Contraseña vacía para XAMPP
-  database: 'mascotasdb',
+  ...dbConfig,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0

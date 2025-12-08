@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useCarrito } from '../../contexts/CarritoContext';
 
@@ -289,9 +290,11 @@ export default function Carrito() {
                                                     Escanea el código {metodoPago === 'yape' ? 'Yape' : 'Plin'}
                                                 </p>
                                                 <div className="flex justify-center">
-                                                    <img 
+                                                    <Image 
                                                         src={metodoPago === 'yape' ? '/Imagen1.png' : '/Imagen2.png'}
                                                         alt={`Código QR ${metodoPago}`}
+                                                        width={192}
+                                                        height={192}
                                                         className="w-48 h-48 rounded-lg"
                                                     />
                                                 </div>
@@ -299,7 +302,7 @@ export default function Carrito() {
                                                     Total a pagar: <span className="font-bold text-primary">S/{total.toFixed(2)}</span>
                                                 </p>
                                                 <p className="text-xs text-gray-500 dark:text-gray-500">
-                                                    Una vez realizado el pago, presiona &quot;Realizar Compra&quot;
+                                                    Una vez realizado el pago, presiona &#34;Realizar Compra&#34;
                                                 </p>
                                             </div>
                                         </div>

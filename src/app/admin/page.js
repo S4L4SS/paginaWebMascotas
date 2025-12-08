@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from "next/navigation";
 import ReportesAdmin from '../../components/ReportesAdmin';
 import { API_URL } from '@/config/api';
@@ -170,9 +171,11 @@ export default function AdminPage() {
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center">
-                <img 
+                <Image 
                   src="/logo.png" 
                   alt="Mundo Mascotas" 
+                  width={40}
+                  height={40}
                   className="h-10 w-auto"
                   onError={(e) => {
                     e.target.style.display = 'none';
